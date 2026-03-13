@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FunTech 3D Replica Prototype</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            font-family: sans-serif;
+            cursor: crosshair;
+            /* Standard interactive feel */
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 10;
+        }
+
+        .ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            color: rgba(0, 0, 0, 0.8);
+            font-size: 4rem;
+            letter-spacing: 0.2em;
+            font-weight: 300;
+            font-family: 'Inter', system-ui, sans-serif;
+            mix-blend-mode: overlay;
+            /* Cool visual effect */
+            margin: 0;
+        }
+
+        p {
+            color: #666;
+            letter-spacing: 0.3em;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+    </style>
+    <!-- GSAP for physical bounce animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <div class="ui-layer">
+        <h1>CREATIVITY</h1>
+        <p>CLICK TO STAMP</p>
+    </div>
+    <div id="canvas-container"></div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { DecalGeometry } from 'three/addons/geometries/DecalGeometry.js';
+
+        const container = document.getElementById('canvas-container');
+
+        // --- 1. Scene & Camera Setup ---
+        const scene = new THREE.Scene();
+        // Give the background a subtle fog to blend background spheres
+        scene.fog = new THREE.FogExp2(0xf0f0f0, 0.003);
+
+        const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 120;
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Performance Optimization
+        // Tone mapping for realistic metallic lighting
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.0;
+        container.appendChild(renderer.domElement);
+
+        // --- 2. Studio Lighting Setup ---
+        // FunTech uses very clean, contrasting lighting to make the silver pop
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
+        hemiLight.position.set(0, 100, 0);
+        scene.add(hemiLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        dirLight.position.set(20, 30, 40);
+        scene.add(dirLight);
+
+        // Backlight for rim reflection
+        const backLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        backLight.position.set(-20, -10, -30);
+        scene.add(backLight);
+
+        // --- 3. The Metal Spheres ---
+        // A smooth geometry used by all spheres
+        const geometry = new THREE.SphereGeometry(1, 64, 64);
+
+        // High-end Silver/Chrome Material
+        const materialChrome = new THREE.MeshStandardMaterial({
+            color: 0xeeeeee,
+            metalness: 0.9,    // Highly metallic
+            roughness: 0.2,    // Slightly glossy but not perfect mirror
+        });
+
+        // The main central sphere
+        const mainSphereGroup = new THREE.Group();
+        const mainSphere = new THREE.Mesh(geometry, materialChrome);
+        mainSphere.scale.set(18, 18, 18); // Base radius 18
+        mainSphereGroup.add(mainSphere);
+        scene.add(mainSphereGroup);
+
+        // Background floating spheres
+        const bgSpheres = [];
+        for (let i = 0; i < 15; i++) {
+            const mesh = new THREE.Mesh(geometry, materialChrome);
+            // Random positions in the background
+            mesh.position.set(
+                (Math.random() - 0.5) * 150,
+                (Math.random() - 0.5) * 150,
+                -30 - Math.random() * 100
+            );
+            // Random sizes
+            const s = 2 + Math.random() * 8;
+            mesh.scale.set(s, s, s);
+
+            // Random movement speeds for sine wave animation
+            const speed = {
+                y: Math.random() * 0.002,
+                x: Math.random() * 0.001,
+                offsetY: Math.random() * Math.PI * 2,
+                offsetX: Math.random() * Math.PI * 2,
+                baseY: mesh.position.y,
+                baseX: mesh.position.x
+            };
+
+            scene.add(mesh);
+            bgSpheres.push({ mesh, speed });
+        }
+
+        // --- 4. Simulated "Thick" Sticker Textures ---
+        const decalTextures = [];
+
+        // We generate bump maps from the SVGs dynamically to give them 3D physical thickness.
+        const createTextureFromSVG = (svgString) => {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = 1024; canvas.height = 1024;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, 1024, 1024);
+
+                    const texColor = new THREE.CanvasTexture(canvas);
+                    texColor.colorSpace = THREE.SRGBColorSpace;
+
+                    // Generate a quick bump map by painting the shape white on a black bg
+                    const bumpCanvas = document.createElement('canvas');
+                    bumpCanvas.width = 1024; bumpCanvas.height = 1024;
+                    const bctx = bumpCanvas.getContext('2d');
+                    bctx.fillStyle = "black";
+                    bctx.fillRect(0, 0, 1024, 1024);
+                    // Draw original shape but force it to white via composite operations
+                    bctx.drawImage(img, 0, 0, 1024, 1024);
+                    bctx.globalCompositeOperation = "source-in";
+                    bctx.fillStyle = "white";
+                    bctx.fillRect(0, 0, 1024, 1024);
+
+                    const texBump = new THREE.CanvasTexture(bumpCanvas);
+
+                    resolve({ color: texColor, bump: texBump });
+                };
+                img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svgString);
+            });
+        };
+
+        const svgs = [
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#FF3B30"/></svg>',
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="15" y="15" width="70" height="70" rx="10" fill="#007AFF"/></svg>',
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,5 61,39 98,39 68,61 79,95 50,73 21,95 32,61 2,39 39,39" fill="#FFCC00"/></svg>',
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,10 90,85 10,85" fill="#34C759"/></svg>',
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="10" y="30" width="80" height="40" rx="20" fill="#000000"/><text x="50" y="55" font-family="sans-serif" font-size="20" fill="white" font-weight="bold" text-anchor="middle" alignment-baseline="middle">HEY!</text></svg>'
+        ];
+
+        Promise.all(svgs.map(createTextureFromSVG)).then(textures => {
+            decalTextures.push(...textures);
+        });
+
+        // The decal material setup
+        const decalMaterial = new THREE.MeshStandardMaterial({
+            metalness: 0.1,
+            roughness: 0.8,    // Matte stickers contrast nicely with the shiny sphere
+            transparent: true,
+            depthTest: true,
+            depthWrite: false,
+            polygonOffset: true,
+            polygonOffsetFactor: -4,
+            bumpScale: 0.05    // Gives physical thickness based on the generated bump map
+        });
+
+        const decals = [];
+
+        // --- 5. Interactive Raycasting & Parallax ---
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        let targetMouseX = 0;
+        let targetMouseY = 0;
+
+        // Track mouse purely for parallax
+        window.addEventListener('mousemove', (event) => {
+            targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            targetMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        window.addEventListener('click', (event) => {
+            if (decalTextures.length === 0) return;
+
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+
+            // Only intersect the main sphere
+            const intersects = raycaster.intersectObject(mainSphere);
+
+            if (intersects.length > 0) {
+                const hit = intersects[0];
+
+                const pos = hit.point.clone();
+                const n = hit.face.normal.clone();
+                n.transformDirection(mainSphere.matrixWorld);
+
+                const target = pos.clone().add(n);
+
+                const dummy = new THREE.Object3D();
+                dummy.position.copy(pos);
+                dummy.lookAt(target);
+                dummy.rotateZ((Math.random() - 0.5) * Math.PI);
+
+                const orientation = dummy.rotation.clone();
+
+                // Decal size
+                const baseScale = 8 + Math.random() * 6;
+                const size = new THREE.Vector3(baseScale, baseScale, baseScale);
+
+                // Texture and Maps
+                const texBundle = decalTextures[Math.floor(Math.random() * decalTextures.length)];
+
+                const mat = decalMaterial.clone();
+                mat.map = texBundle.color;
+                mat.bumpMap = texBundle.bump;
+
+                // Create mesh using DecalGeometry
+                const decalMesh = new THREE.Mesh(new DecalGeometry(mainSphere, pos, orientation, size), mat);
+
+                // Convert world space to group local space so it rotates with the sphere
+                mainSphereGroup.worldToLocal(decalMesh.position);
+                decalMesh.quaternion.multiplyQuaternions(mainSphereGroup.quaternion.clone().invert(), decalMesh.quaternion);
+
+                // --- GSAP Animation for Physical "Slap" ---
+                // Initially start small
+                decalMesh.scale.set(0.01, 0.01, 0.01);
+
+                mainSphereGroup.add(decalMesh);
+                decals.push({ mesh: decalMesh, mat: mat });
+
+                // Animate scale up with an elastic bouncy feeling
+                gsap.to(decalMesh.scale, {
+                    x: 1, y: 1, z: 1,
+                    duration: 0.8,
+                    ease: "elastic.out(1, 0.4)" // Strong bounce
+                });
+
+                // Performance tracking
+                if (decals.length > 50) {
+                    const old = decals.shift();
+                    mainSphereGroup.remove(old.mesh);
+                    old.mesh.geometry.dispose();
+                    old.mat.dispose();
+                }
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // --- 6. The Animation Loop ---
+        let time = 0;
+
+        function render() {
+            requestAnimationFrame(render);
+            time += 1;
+
+            // Auto-rotate main sphere
+            mainSphereGroup.rotation.y += 0.003;
+            mainSphereGroup.rotation.x += 0.001;
+
+            // Smooth Camera Parallax Effect (follows mouse)
+            // Camera smoothly approaches the target offset
+            camera.position.x += (targetMouseX * 5 - camera.position.x) * 0.05;
+            camera.position.y += (targetMouseY * -5 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            // Animate Background Spheres (gentle floating)
+            bgSpheres.forEach(obj => {
+                obj.mesh.position.y = obj.speed.baseY + Math.sin(time * obj.speed.y + obj.speed.offsetY) * 10;
+                obj.mesh.position.x = obj.speed.baseX + Math.cos(time * obj.speed.x + obj.speed.offsetX) * 10;
+                // Slowly rotate themselves
+                obj.mesh.rotation.y += 0.005;
+                obj.mesh.rotation.x += 0.005;
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        render();
+    </script>
+</body>
+
+</html>
