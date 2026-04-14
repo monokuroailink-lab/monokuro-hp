@@ -1,0 +1,106 @@
+:root {
+  --transition-mode: 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f0f0f0; /* Omote base color */
+  overflow-x: hidden;
+  width: 100vw;
+}
+
+body.mode-ura {
+  background-color: #000;
+}
+
+/* FV Container */
+.fv {
+  position: relative;
+  width: 100vw;
+  height: auto;
+  min-height: 100vh;
+}
+
+.fv-aspect-ratio {
+  position: relative;
+  width: 100%;
+  padding-top: 62.5%; /* 1440x900 ratio */
+  background-color: #f0f0f0;
+}
+
+.fv__layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-mode), visibility var(--transition-mode);
+}
+
+.mode-omote .fv-layer-omote,
+.mode-ura .fv-layer-ura {
+  opacity: 1;
+  visibility: visible;
+  z-index: 5;
+}
+
+.fv-layer-omote {
+  background-image: url("assets/images/fv-omote.png");
+}
+
+.fv-layer-ura {
+  background-image: url("assets/images/fv-ura.png");
+}
+
+/* Interactive Overlays */
+.fv__triggers {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.logo-trigger {
+  position: absolute;
+  top: 4%;
+  left: 7%;
+  width: 18%;
+  height: 10%;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.menu-trigger {
+  position: absolute;
+  top: 4%;
+  right: 7%;
+  width: 7%;
+  height: 10%;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+/* Glitch Overlay */
+.glitch-overlay {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 999;
+  display: none;
+  mix-blend-mode: difference;
+}
