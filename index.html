@@ -4,12 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>モノクロ。</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --img-omote: url('assets/images/fv-omote.png');
             --img-ura: url('assets/images/fv-ura.png');
         }
         body, html { margin: 0; padding: 0; background: #f0f0f0; overflow-x: hidden; }
+        body {
+            font-family: 'Space Grotesk', "Noto Sans JP", sans-serif;
+            color: #333;
+            user-select: none;
+            cursor: none; /* Custom cursor */
+            letter-spacing: 0.08em; /* Tracking 80 */
+        }
 
         /* Container keeping 1440:900 ratio */
         .fv-container { 
@@ -72,6 +82,569 @@
             position: absolute; top: 4%; left: 7%; width: 18%; height: 10%;
             cursor: pointer; z-index: 100;
         }
+
+        /* Logo Carousel styles */
+        .logo-carousel {
+            width: 100%;
+            background: transparent;
+            padding: 40px 0;
+            overflow: hidden;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 10;
+        }
+        .logo-track {
+            display: flex;
+            align-items: center;
+            width: max-content;
+            animation: scroll 60s linear infinite;
+            gap: 100px;
+            padding-left: 50px;
+        }
+        .logo-item {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-weight: 800;
+            color: #000;
+            font-size: 20px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            opacity: 0.6;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            filter: grayscale(1);
+        }
+        .logo-item:hover {
+            opacity: 1;
+            filter: grayscale(0);
+            letter-spacing: 0.25em;
+            transform: scale(1.05);
+        }
+        /* Image-ready styles */
+        .logo-item img {
+            height: 32px; /* Adjustable base height */
+            width: auto;
+            display: block;
+            filter: brightness(0); /* Force black in Omote */
+            transition: all 0.5s ease;
+        }
+        .mode-ura .logo-item img {
+            filter: brightness(0) invert(1); /* Force white in Ura */
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-50% - 50px)); }
+        }
+
+        /* Dark mode overrides */
+        .mode-ura .logo-carousel {
+            border-top-color: rgba(255,255,255,0.1);
+            border-bottom-color: rgba(255,255,255,0.1);
+        }
+        .mode-ura .logo-item {
+            color: #fff;
+            opacity: 0.4;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .logo-carousel {
+                padding: 25px 0;
+            }
+            .logo-track {
+                gap: 50px;
+                animation-duration: 30s; /* Faster animation for shorter distance */
+            }
+            .logo-item {
+                font-size: 14px;
+            }
+        }
+
+        /* Vision Section styles (FUNTECH Style) */
+        .sec-vision {
+            background: #000;
+            color: #fff;
+            padding: 120px 5% 160px;
+            font-family: 'Space Grotesk', sans-serif;
+            border-top: 1px solid #1a1a1a;
+        }
+        .vision-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(40px, 8vw, 100px);
+            font-weight: 900;
+            line-height: 0.9;
+            margin: 0 0 20px 0;
+            letter-spacing: -0.02em;
+            color: #0066ff; /* Accent Blue for Omote */
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .mode-ura .vision-title {
+            color: #ff007f; /* Neon Pink for Ura */
+            text-shadow: 0 0 15px rgba(255, 0, 127, 0.4), 0 0 30px rgba(255, 0, 127, 0.2);
+        }
+        .vision-sub {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .vision-sub::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: #fff;
+        }
+
+        .capsule-ticker {
+            width: 100%;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50px;
+            padding: 12px 0;
+            overflow: hidden;
+            margin-bottom: 80px;
+        }
+        .ticker-track {
+            display: flex;
+            width: max-content;
+            animation: ticker-scroll 40s linear infinite;
+            gap: 60px;
+            padding-left: 30px;
+        }
+        .ticker-track span {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+        @keyframes ticker-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .vision-copy {
+            max-width: 800px;
+            margin-bottom: 100px;
+        }
+        .vision-copy .lead {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+        .vision-copy .text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.6);
+            font-family: "Noto Sans JP", sans-serif; /* Fallback for JP */
+        }
+
+        .vision-links {
+            display: flex;
+            gap: 40px;
+        }
+        .v-link {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #fff;
+            transition: all 0.3s ease;
+        }
+        .v-link:hover {
+            opacity: 0.6;
+            padding-right: 10px;
+        }
+
+        /* Mode-specific overrides for vision */
+        .mode-omote .sec-vision {
+            background: #f8f8f8;
+            color: #000;
+            border-top-color: #eee;
+        }
+        .mode-omote .vision-sub::before {
+            background-color: #000;
+        }
+        .mode-omote .v-link {
+            color: #000;
+            border-bottom-color: #000;
+            background: transparent;
+        }
+        .mode-omote .capsule-ticker { border-color: rgba(0,0,0,0.1); }
+        .mode-omote .vision-sub { color: rgba(0,0,0,0.7); }
+        .mode-omote .vision-copy .lead { color: #000; }
+        .mode-omote .vision-copy .text { color: rgba(0,0,0,0.6); }
+        .mode-omote .ticker-track span { color: rgba(0,0,0,0.8); }
+
+        /* Works Section styles (Crackin Style) */
+        .sec-works {
+            background: #000;
+            color: #fff;
+            padding: 120px 5%;
+            font-family: 'Space Grotesk', sans-serif;
+            border-top: 1px solid #1a1a1a;
+        }
+        .works-header {
+            margin-bottom: 80px;
+        }
+        .works-ttl-en {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 40px;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .works-ttl-jp {
+            font-size: 14px;
+            letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.5);
+            font-family: "Noto Sans JP", sans-serif;
+        }
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px 40px;
+        }
+        .works-item {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .works-img-box {
+            position: relative;
+            background: #000;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 15px; /* R15 */
+        }
+        .works-img-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .works-item:hover .works-img-box::after {
+            opacity: 0.15; /* Subtle white overlay on hover */
+        }
+        .works-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            opacity: 0.8;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .works-item:hover .works-img-box img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        .works-content {
+            padding: 0 5px;
+        }
+        .works-tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 2px;
+            margin-bottom: 15px;
+            color: #fff;
+            letter-spacing: 0.05em;
+            background: #ff007f; /* Neon Pink base */
+            transition: all 0.5s ease;
+        }
+        .mode-omote .works-tag {
+            background: #0066ff; /* Accent Blue for Omote */
+        }
+        .mode-ura .works-tag {
+            background: #ff007f; /* Ensure Pink for Ura */
+        }
+        .works-cl-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .works-pj-desc {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            font-family: "Noto Sans JP", sans-serif;
+        }
+
+        /* Mode overrides for Works */
+        .mode-omote .sec-works {
+            background: #f8f8f8;
+            color: #000;
+            border-top-color: #eee;
+        }
+        .mode-omote .works-img-box { background: #eee; border-color: rgba(0,0,0,0.05); }
+        .mode-omote .works-ttl-jp { color: rgba(0,0,0,0.4); }
+        .mode-omote .works-pj-desc { color: rgba(0,0,0,0.4); }
+        .mode-omote .works-tag {
+            background: #0066ff; /* Accent Blue for Omote */
+        }
+
+        @media (max-width: 1024px) {
+            .works-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .works-grid { grid-template-columns: 1fr; gap: 40px; }
+            .sec-works { padding: 80px 5%; }
+            .works-ttl-en { font-size: 32px; }
+        }
+
+        /* Service Section styles (Crackin Style) */
+        .sec-service {
+            background: #000;
+            color: #fff;
+            padding: 120px 5%;
+            font-family: 'Space Grotesk', sans-serif;
+            border-top: 1px solid #1a1a1a;
+        }
+        .service-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .service-item {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 60px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+        }
+        .service-item:last-child {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .service-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 60px;
+            font-weight: 900;
+            line-height: 1;
+            color: #ff007f; /* Neon Pink base */
+            min-width: 100px;
+            transition: color 0.5s ease;
+        }
+        .service-info {
+            flex: 1;
+        }
+        .service-en {
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.5);
+            display: block;
+            margin-bottom: 10px;
+        }
+        .service-catch {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+        .service-text {
+            font-size: 15px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.6);
+            max-width: 700px;
+            font-family: "Noto Sans JP", sans-serif;
+        }
+
+        /* Mode overrides for Service */
+        .mode-omote .sec-service {
+            background: #f8f8f8;
+            color: #000;
+            border-top-color: #eee;
+        }
+        .mode-omote .service-item { border-color: rgba(0,0,0,0.1); }
+        .mode-omote .service-num { color: #0066ff; }
+        .mode-omote .service-en { color: rgba(0,0,0,0.4); }
+        .mode-omote .service-catch { color: #000; }
+        .mode-omote .service-text { color: rgba(0,0,0,0.6); }
+
+        @media (max-width: 768px) {
+            .service-item { flex-direction: column; gap: 20px; padding: 40px 0; }
+            .service-num { font-size: 40px; min-width: auto; }
+            .service-catch { font-size: 24px; }
+            .sec-service { padding: 80px 5%; }
+        }
+
+        /* Footer styles (Crackin Image Reference) */
+        footer {
+            background: #000;
+            color: #fff;
+            padding: 100px 5% 40px;
+            font-family: 'Space Grotesk', "Noto Sans JP", sans-serif;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 80px;
+            margin-bottom: 80px;
+        }
+        .footer-left {
+            width: 40%;
+        }
+        .footer-right {
+            width: 55%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .footer-brand-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 50px;
+        }
+        
+        /* CV Items */
+        .footer-cv-area {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .cv-link {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: opacity 0.3s;
+        }
+        .cv-link:hover { opacity: 0.7; }
+        .cv-icon-box {
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+        .cv-icon-box svg { width: 30px; height: 30px; }
+        .cv-info .cv-label {
+            font-size: 20px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 2px;
+            font-family: "Noto Sans JP", sans-serif;
+        }
+        .cv-info .cv-en {
+            font-size: 11px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        /* Right Menu Columns */
+        .menu-col {
+            flex: 1;
+        }
+        .menu-header {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 3px 12px;
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .menu-list li {
+            margin-bottom: 12px;
+        }
+        .menu-list a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            transition: color 0.3s;
+            font-family: "Noto Sans JP", sans-serif;
+        }
+        .menu-list a:hover {
+            color: #fff;
+        }
+        
+        /* Bottom Bar */
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 11px;
+        }
+        .bottom-links { display: flex; gap: 20px; }
+        .bottom-links a { color: rgba(255,255,255,0.5); text-decoration: none; }
+        .bottom-copyright { color: rgba(255,255,255,0.5); }
+
+        /* Mode overrides for Footer New */
+        .mode-omote footer {
+            background: #f8f8f8;
+            color: #000;
+            border-top-color: rgba(0,0,0,0.05);
+        }
+        .mode-omote .footer-brand-logo { color: #000; }
+        .mode-omote .cv-icon-box { background: #000; color: #f8f8f8; }
+        .mode-omote .cv-info .cv-en { color: rgba(0,0,0,0.6); }
+        .mode-omote .menu-header { background: #000; color: #fff; }
+        .mode-omote .menu-list a { color: rgba(0,0,0,0.7); }
+        .mode-omote .menu-list a:hover { color: #000; }
+        .mode-omote .bottom-links a,
+        .mode-omote .bottom-copyright { color: rgba(0,0,0,0.6); }
+
+        /* Banner Area visibility */
+        .f-banner {
+            width: 100%; 
+            aspect-ratio: 2.4/1; 
+            background: rgba(255,255,255,0.05); 
+            border-radius: 4px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 11px; 
+            color: rgba(255,255,255,0.2); 
+            border: 1px dashed rgba(255,255,255,0.1);
+        }
+        .mode-omote .f-banner {
+            background: rgba(0,0,0,0.03);
+            color: rgba(0,0,0,0.4);
+            border-color: rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 1024px) {
+            .footer-container { flex-direction: column; gap: 60px; }
+            .footer-left, .footer-right { width: 100%; }
+        }
+        @media (max-width: 768px) {
+            .footer-right { flex-direction: column; gap: 40px; }
+            .footer-bottom { flex-direction: column; gap: 20px; align-items: flex-start; }
+            .cv-icon-box { width: 50px; height: 50px; }
+            .cv-info .cv-label { font-size: 18px; }
+        }
     </style>
 </head>
 <body class="mode-omote">
@@ -84,6 +657,294 @@
             <div class="glitch-overlay"></div>
         </div>
     </div>
+
+    <!-- Client Logo Carousel -->
+    <section class="logo-carousel">
+        <div class="logo-track">
+            <!-- First set of logos (Arbitrary curated brands) -->
+            <div class="logo-item">ADOBE</div>
+            <div class="logo-item">FIGMA</div>
+            <div class="logo-item">STRIPE</div>
+            <div class="logo-item">NOTION</div>
+            <div class="logo-item">SLACK</div>
+            <div class="logo-item">FRAMER</div>
+            <div class="logo-item">VERCEL</div>
+            <div class="logo-item">APPLE</div>
+            <div class="logo-item">SONY</div>
+            <!-- Duplicate for seamless loop -->
+            <div class="logo-item">ADOBE</div>
+            <div class="logo-item">FIGMA</div>
+            <div class="logo-item">STRIPE</div>
+            <div class="logo-item">NOTION</div>
+            <div class="logo-item">SLACK</div>
+            <div class="logo-item">FRAMER</div>
+            <div class="logo-item">VERCEL</div>
+            <div class="logo-item">APPLE</div>
+            <div class="logo-item">SONY</div>
+        </div>
+    </section>
+
+    <!-- Vision Section (FUNTECH Style Integration) -->
+    <section class="sec-vision">
+        <div class="inner">
+            <h2 class="vision-title">CRAFTING THE<br>UNSEEN STRUCTURES</h2>
+            <p class="vision-sub">STRATEGY & VERBALIZATION FIRM >> MONOKURO INC.</p>
+            
+            <div class="capsule-ticker">
+                <div class="ticker-track">
+                    <span>2026.04.15 LOGICAL STRUCTURE</span>
+                    <span>2026.04.10 VERBALIZATION</span>
+                    <span>2026.04.05 BRANDING</span>
+                    <span>2026.03.28 LTV OPTIMIZATION</span>
+                    <span>2026.03.15 BUSINESS DESIGN</span>
+                    <span>2026.04.15 LOGICAL STRUCTURE</span>
+                    <span>2026.04.10 VERBALIZATION</span>
+                    <span>2026.04.05 BRANDING</span>
+                    <span>2026.03.28 LTV OPTIMIZATION</span>
+                    <span>2026.03.15 BUSINESS DESIGN</span>
+                </div>
+            </div>
+
+            <div class="vision-copy">
+                <p class="lead">「自分は白、顧客は色。」</p>
+                <p class="text">
+                    主役に光を当てるために、自らは背景（ウラカタ）へ。ウラカタに徹するほど、対象は正しく輝く。<br>
+                    構造、言語、そして情熱。これらを最適に適合させる多角的な実務伴走手法で、<br>
+                    顧客の想いが最も鮮やかに伝わる、「売れる仕組み」というブランドエクスペリエンスを提供します。
+                </p>
+            </div>
+
+            <div class="vision-links">
+                <a href="#about" class="v-link">ABOUT MONOKURO</a>
+                <a href="#philosophy" class="v-link">OUR PHILOSOPHY</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Works Section (Crackin Style Integration) -->
+    <section id="works" class="sec-works">
+        <div class="inner">
+            <header class="works-header">
+                <h2 class="works-ttl">
+                    <span class="works-ttl-en">WORKS</span>
+                    <span class="works-ttl-jp">制作実績</span>
+                </h2>
+            </header>
+
+            <div class="works-grid">
+                <!-- Work 1 -->
+                <a href="#" class="works-item">
+                    <div class="works-img-box">
+                        <img src="assets/images/works/ds2.png" alt="DEATH STRANDING 2">
+                    </div>
+                    <div class="works-content">
+                        <span class="works-tag">WEB制作</span>
+                        <h3 class="works-cl-name">株式会社コジマプロダクション</h3>
+                        <p class="works-pj-desc">キャンペーンサイト制作</p>
+                    </div>
+                </a>
+
+                <!-- Work 2 -->
+                <a href="#" class="works-item">
+                    <div class="works-img-box">
+                        <img src="assets/images/works/metaverse.png" alt="EAST BROADCAST">
+                    </div>
+                    <div class="works-content">
+                        <span class="works-tag">アプリ制作</span>
+                        <h3 class="works-cl-name">学校法人東放学園様</h3>
+                        <p class="works-pj-desc">オープンキャンパスメタバース制作</p>
+                    </div>
+                </a>
+
+                <!-- Work 3 -->
+                <a href="#" class="works-item">
+                    <div class="works-img-box">
+                        <img src="assets/images/works/toraichi.png" alt="TORAICHI ARCHIVE">
+                    </div>
+                    <div class="works-content">
+                        <span class="works-tag">WEB制作</span>
+                        <h3 class="works-cl-name">株式会社寅壱</h3>
+                        <p class="works-pj-desc">コーポレートサイト制作</p>
+                    </div>
+                </a>
+
+                <!-- Work 4 -->
+                <a href="#" class="works-item">
+                    <div class="works-img-box">
+                        <img src="assets/images/works/sellmore.png" alt="SELLMORE">
+                    </div>
+                    <div class="works-content">
+                        <span class="works-tag">WEB制作</span>
+                        <h3 class="works-cl-name">株式会社NOVASTO様</h3>
+                        <p class="works-pj-desc">サービスLP制作</p>
+                    </div>
+                </a>
+
+                <!-- Work 5 -->
+                <a href="#" class="works-item">
+                    <div class="works-img-box">
+                        <img src="assets/images/works/ultraman.png" alt="ULTRAMAN VIRTUAL">
+                    </div>
+                    <div class="works-content">
+                        <span class="works-tag">ゲーム開発</span>
+                        <h3 class="works-cl-name">メタフィールド株式会社様</h3>
+                        <p class="works-pj-desc">ウルトラマンバーチャルパーク開発</p>
+                    </div>
+                </a>
+
+                <!-- Work 6 -->
+                <a href="#" class="works-item">
+                    <div class="works-img-box">
+                        <img src="assets/images/works/globalsign.png" alt="GLOBALSIGN">
+                    </div>
+                    <div class="works-content">
+                        <span class="works-tag">WEB制作</span>
+                        <h3 class="works-cl-name">GMOグローバルサイン株式会社様</h3>
+                        <p class="works-pj-desc">プロモーションLP制作</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div style="text-align: center; margin-top: 80px;">
+                <a href="#" class="v-link">VIEW ALL WORKS</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Section (Crackin Style Integration) -->
+    <section id="service" class="sec-service">
+        <div class="inner">
+            <header class="works-header">
+                <h2 class="works-ttl">
+                    <span class="works-ttl-en">OUR SERVICE</span>
+                    <span class="works-ttl-jp">提供サービスについて</span>
+                </h2>
+            </header>
+
+            <ul class="service-list">
+                <!-- Service 01 -->
+                <li class="service-item">
+                    <div class="service-num">01</div>
+                    <div class="service-info">
+                        <span class="service-en">BUSINESS STRATEGY</span>
+                        <h3 class="service-catch">戦略設計と構造化。<br>勝てる「仕組み」を設計する。</h3>
+                        <p class="service-text">
+                            ビジネスモデルの構築からLTVの最適化まで、持続可能な成長のための「構造」を論理的に設計します。単なるアイデア出しに留まらない、数値に裏打ちされた戦略立案で主役を支援します。
+                        </p>
+                    </div>
+                </li>
+
+                <!-- Service 02 -->
+                <li class="service-item">
+                    <div class="service-num">02</div>
+                    <div class="service-info">
+                        <span class="service-en">VERBALIZATION</span>
+                        <h3 class="service-catch">言語化・コンセプトメイク。<br>熱量を、伝わる「言葉」に。</h3>
+                        <p class="service-text">
+                            内側に秘めた熱量や才能を、顧客の心に届く「言語」へと翻訳します。パーパス策定からキャッチコピー、ストーリーライティングまで、ブランドの輪郭を鮮明に描き出します。
+                        </p>
+                    </div>
+                </li>
+
+                <!-- Service 03 -->
+                <li class="service-item">
+                    <div class="service-num">03</div>
+                    <div class="service-info">
+                        <span class="service-en">OPERATIONS & MARKETING</span>
+                        <h3 class="service-catch">現場特化型・実務伴走。<br>「動く」実務を提供。</h3>
+                        <p class="service-text">
+                            机上の空論ではない、現場で真に「動く」実働を。SNS運用支援、広告運用サポートから、制作物のデリバリーまで、クリエイターとしての高い解像度で実務を完遂します。
+                        </p>
+                    </div>
+                </li>
+            </ul>
+
+            <div style="text-align: center; margin-top: 80px;">
+                <a href="#contact" class="v-link">GET IN TOUCH</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <!-- Left CV & Logo -->
+            <div class="footer-left">
+                <a href="#" class="footer-brand-logo">MONOKURO INC.</a>
+                
+                <div class="footer-cv-area">
+                    <a href="#" class="cv-link">
+                        <div class="cv-icon-box">
+                            <!-- Document Icon -->
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        </div>
+                        <div class="cv-info">
+                            <span class="cv-label">資料ダウンロード</span>
+                            <span class="cv-en">DOCUMENT ↗</span>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="cv-link">
+                        <div class="cv-icon-box">
+                            <!-- Contact Icon (Paper Plane) -->
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </div>
+                        <div class="cv-info">
+                            <span class="cv-label">お問い合わせ</span>
+                            <span class="cv-en">CONTACT ↗</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Banner Area -->
+                <div class="f-banner">BANNER AREA</div>
+            </div>
+            
+            <!-- Right Menus -->
+            <div class="footer-right">
+                <div class="menu-col">
+                    <div class="menu-header">ABOUT</div>
+                    <ul class="menu-list">
+                        <li><a href="#">TOP</a></li>
+                        <li><a href="#works">制作実績</a></li>
+                        <li><a href="#">お客様の声</a></li>
+                        <li><a href="#">遠方のお客様へ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="menu-col">
+                    <div class="menu-header">COMPANY</div>
+                    <ul class="menu-list">
+                        <li><a href="#">会社紹介</a></li>
+                        <li><a href="#">- 理念</a></li>
+                        <li><a href="#">- コアバリュー</a></li>
+                        <li><a href="#">- 代表挨拶</a></li>
+                        <li><a href="#">- 会社概要</a></li>
+                        <li><a href="#">採用情報</a></li>
+                    </ul>
+                </div>
+                
+                <div class="menu-col">
+                    <div class="menu-header">SERVICE</div>
+                    <ul class="menu-list">
+                        <li><a href="#service">戦略設計事業</a></li>
+                        <li><a href="#service">言語化支援事業</a></li>
+                        <li><a href="#service">実務伴走事業</a></li>
+                        <li><a href="#">SDGsへの取り組み</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="bottom-links">
+                <a href="#">サービス利用規約</a>
+                <a href="#">プライバシーポリシー</a>
+                <a href="#">特定商取引法</a>
+                <a href="#">サイトマップ</a>
+            </div>
+            <p class="bottom-copyright">&copy; 2026 MONOKURO Inc. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
 
     <script>
         let taps = 0, timer, isUra = false;
@@ -143,7 +1004,16 @@
             setTimeout(() => {
                 isUra = !isUra;
                 container.style.backgroundImage = isUra ? 'var(--img-ura)' : 'var(--img-omote)';
-                document.body.style.background = isUra ? '#000' : '#f0f0f0';
+                document.body.style.background = isUra ? '#000' : '#f8f8f8';
+                
+                // Toggle mode classes for logo colors
+                if(isUra) {
+                    document.body.classList.remove('mode-omote');
+                    document.body.classList.add('mode-ura');
+                } else {
+                    document.body.classList.remove('mode-ura');
+                    document.body.classList.add('mode-omote');
+                }
                 
                 setTimeout(() => {
                     document.body.classList.remove('glitch-active');
