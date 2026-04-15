@@ -1,0 +1,1004 @@
+/* ========================================
+   モノクロ。FV - SWELL用カスタムCSS
+   設置場所: 外観 > カスタマイズ > 追加CSS
+   または 子テーマの style.css
+======================================== */
+
+:root {
+    --mono-black: #0a0a0a;
+    --mono-white: #FFFFFF;
+    --mono-gray: #9CA3AF;
+    --mono-accent: #6B7280;
+    --mono-side-padding: 120px;
+}
+
+/* ========================================
+   FVセクション全体
+======================================== */
+.monokuro-fv {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: var(--mono-black);
+    overflow: hidden;
+    padding: 0 var(--mono-side-padding);
+}
+
+/* ========================================
+   ローディング画面
+======================================== */
+.monokuro-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--mono-black);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.monokuro-loading__logo {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    color: var(--mono-white);
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.monokuro-loading__logo-img {
+    max-width: 180px;
+    height: auto;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.monokuro-loading__bar-wrap {
+    width: 100px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.12);
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+.monokuro-loading__bar {
+    width: 0%;
+    height: 100%;
+    background: #00ffff;
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
+    /* Thicker Neon */
+    animation: rgbHueRotate 5s linear infinite;
+}
+
+.monokuro-loading__percent {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    /* Slightly larger */
+    font-weight: 700;
+    /* Bolder */
+    letter-spacing: 0.4em;
+    color: #fff;
+    /* White core */
+    /* Cyberpunk Cyan thick neon outline */
+    text-shadow:
+        0 0 5px #00ffff,
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        0 0 40px #00ffff,
+        0 0 80px #00ffff;
+    margin-top: 20px;
+    opacity: 1;
+    /* Force visible from the start */
+    animation: rgbHueRotate 5s linear infinite;
+}
+
+/* ========================================
+   カスタムヘッダー（FV内）
+======================================== */
+.monokuro-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px var(--mono-side-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.monokuro-header__logo {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--mono-white);
+    opacity: 0;
+}
+
+.monokuro-header__logo-img {
+    height: 26px;
+    width: auto;
+    opacity: 0;
+}
+
+.monokuro-header__nav {
+    display: flex;
+    gap: 40px;
+}
+
+.monokuro-header__nav a {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--mono-white);
+    text-decoration: none;
+    opacity: 0;
+    position: relative;
+    padding-bottom: 4px;
+}
+
+.monokuro-header__nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--mono-white);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.monokuro-header__nav a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.monokuro-header__menu-toggle {
+    display: none;
+    width: 26px;
+    height: 16px;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    opacity: 0;
+    background: none;
+    border: none;
+}
+
+.monokuro-header__menu-toggle span {
+    width: 100%;
+    height: 1px;
+    background: var(--mono-white);
+}
+
+/* ========================================
+   背景レイヤー群
+======================================== */
+
+/* Layer 1: グラデーション */
+.monokuro-bg-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(ellipse 80% 50% at 20% 30%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse 100% 80% at 50% 100%, rgba(255, 255, 255, 0.03) 0%, transparent 40%);
+    opacity: 0;
+}
+
+/* Layer 2: ノイズ */
+.monokuro-bg-noise {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+/* Layer 3: グリッド（全画面） */
+.monokuro-bg-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0;
+}
+
+/* Layer 4: 大きな装飾円 */
+.monokuro-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    opacity: 0;
+}
+
+.monokuro-bg-circle--1 {
+    width: 800px;
+    height: 800px;
+    top: -300px;
+    left: -200px;
+    animation: monokuroFloat 30s ease-in-out infinite;
+}
+
+.monokuro-bg-circle--2 {
+    width: 600px;
+    height: 600px;
+    bottom: -200px;
+    right: -150px;
+    animation: monokuroFloat 25s ease-in-out infinite reverse;
+}
+
+.monokuro-bg-circle--3 {
+    width: 400px;
+    height: 400px;
+    top: 20%;
+    right: 10%;
+    border-color: rgba(255, 255, 255, 0.02);
+    animation: monokuroFloat 20s ease-in-out infinite;
+    animation-delay: -5s;
+}
+
+@keyframes monokuroFloat {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(20px, -15px) rotate(2deg);
+    }
+
+    50% {
+        transform: translate(0, 10px) rotate(0deg);
+    }
+
+    75% {
+        transform: translate(-15px, -5px) rotate(-2deg);
+    }
+}
+
+/* Layer 5: 縦横ライン */
+.monokuro-bg-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.monokuro-bg-line-v {
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    top: 0;
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(255, 255, 255, 0.06) 20%,
+            rgba(255, 255, 255, 0.06) 80%,
+            transparent 100%);
+}
+
+.monokuro-bg-line-v:nth-child(1) {
+    left: 25%;
+}
+
+.monokuro-bg-line-v:nth-child(2) {
+    left: 50%;
+}
+
+.monokuro-bg-line-v:nth-child(3) {
+    left: 75%;
+}
+
+.monokuro-bg-line-h {
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    left: 0;
+    background: linear-gradient(to right,
+            transparent 0%,
+            rgba(255, 255, 255, 0.04) 20%,
+            rgba(255, 255, 255, 0.04) 80%,
+            transparent 100%);
+}
+
+.monokuro-bg-line-h:nth-child(4) {
+    top: 33%;
+}
+
+.monokuro-bg-line-h:nth-child(5) {
+    top: 66%;
+}
+
+/* Layer 6: パーティクル */
+.monokuro-bg-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.monokuro-bg-particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+}
+
+/* Layer 7: 光のアクセント */
+.monokuro-bg-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.monokuro-bg-glow--1 {
+    width: 400px;
+    height: 400px;
+    top: 10%;
+    left: 5%;
+    background: rgba(138, 43, 226, 0.4);
+    /* Neon Purple */
+    animation: monokuroGlow 8s ease-in-out infinite, rgbHueRotate 10s linear infinite;
+}
+
+.monokuro-bg-glow--2 {
+    width: 300px;
+    height: 300px;
+    bottom: 20%;
+    right: 15%;
+    background: rgba(0, 255, 255, 0.3);
+    /* Cyan */
+    animation: monokuroGlow 10s ease-in-out infinite, rgbHueRotate 8s linear infinite reverse;
+    animation-delay: -3s;
+}
+
+@keyframes rgbHueRotate {
+    0% {
+        filter: hue-rotate(0deg) blur(80px);
+    }
+
+    100% {
+        filter: hue-rotate(360deg) blur(80px);
+    }
+}
+
+@keyframes monokuroGlow {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+}
+
+/* Layer 8: 動くライン */
+.monokuro-bg-moving-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.monokuro-moving-line {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    height: 1px;
+    width: 200px;
+}
+
+.monokuro-moving-line--1 {
+    top: 25%;
+    animation: monokuroMoveLine 12s linear infinite;
+}
+
+.monokuro-moving-line--2 {
+    top: 55%;
+    animation: monokuroMoveLine 15s linear infinite;
+    animation-delay: -5s;
+}
+
+.monokuro-moving-line--3 {
+    top: 80%;
+    animation: monokuroMoveLine 10s linear infinite;
+    animation-delay: -8s;
+}
+
+@keyframes monokuroMoveLine {
+    0% {
+        left: -200px;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 100%;
+        opacity: 0;
+    }
+}
+
+/* ========================================
+   Split Layout 2:1
+======================================== */
+.monokuro-fv__split {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    z-index: 10;
+}
+
+/* 左側：テキスト（2/3） */
+.monokuro-fv__left {
+    flex: 2;
+    padding-right: 80px;
+}
+
+.monokuro-fv__content {
+    max-width: 600px;
+}
+
+.monokuro-fv__main {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+    color: var(--mono-white);
+    margin: 0;
+}
+
+.monokuro-fv__main .line {
+    display: block;
+    overflow: hidden;
+    margin: 8px 0;
+}
+
+.monokuro-fv__main .line-inner {
+    display: block;
+    transform: translateY(110%);
+}
+
+.monokuro-fv__sub {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    color: var(--mono-gray);
+    margin-top: 28px;
+    opacity: 0;
+    transform: translateY(15px);
+}
+
+.monokuro-fv__cta {
+    margin-top: 45px;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.monokuro-cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--mono-white);
+    text-decoration: none;
+    padding: 12px 0;
+    position: relative;
+}
+
+.monokuro-cta-link::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    width: calc(100% - 50px);
+    height: 1px;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.monokuro-cta-arrow {
+    width: 35px;
+    height: 1px;
+    background: var(--mono-white);
+    position: relative;
+    transition: width 0.3s;
+}
+
+.monokuro-cta-arrow::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -4px;
+    width: 9px;
+    height: 9px;
+    border-right: 1px solid var(--mono-white);
+    border-top: 1px solid var(--mono-white);
+    transform: rotate(45deg);
+}
+
+.monokuro-cta-link:hover .monokuro-cta-arrow {
+    width: 50px;
+}
+
+/* 右側：グラフィック（1/3） */
+.monokuro-fv__right {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* ========================================
+   Main Graphic
+======================================== */
+.monokuro-graphic {
+    position: relative;
+    width: 480px;
+    height: 480px;
+    opacity: 0;
+}
+
+/* 回転する円 */
+.monokuro-orbit {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.monokuro-orbit--1 {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    animation: monokuroOrbit 35s linear infinite;
+}
+
+.monokuro-orbit--2 {
+    width: 70%;
+    height: 70%;
+    top: 15%;
+    left: 15%;
+    animation: monokuroOrbit 28s linear infinite reverse;
+}
+
+.monokuro-orbit--3 {
+    width: 40%;
+    height: 40%;
+    top: 30%;
+    left: 30%;
+    animation: monokuroOrbit 20s linear infinite;
+}
+
+@keyframes monokuroOrbit {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 軌道上のドット */
+.monokuro-orbit__dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #00ffff;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.5);
+    animation: rgbHueRotateDot 5s linear infinite;
+}
+
+@keyframes rgbHueRotateDot {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+.monokuro-orbit--1 .monokuro-orbit__dot {
+    top: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.monokuro-orbit--2 .monokuro-orbit__dot {
+    top: 50%;
+    right: -3px;
+    transform: translateY(-50%);
+}
+
+.monokuro-orbit--3 .monokuro-orbit__dot {
+    bottom: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* グリッドライン */
+.monokuro-graphic__grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.monokuro-graphic__grid-line {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.monokuro-graphic__grid-line--h {
+    width: 100%;
+    height: 1px;
+    left: 0;
+}
+
+.monokuro-graphic__grid-line--v {
+    width: 1px;
+    height: 100%;
+    top: 0;
+}
+
+.monokuro-graphic__grid-line--h1 {
+    top: 33%;
+}
+
+.monokuro-graphic__grid-line--h2 {
+    top: 66%;
+}
+
+.monokuro-graphic__grid-line--v1 {
+    left: 33%;
+}
+
+.monokuro-graphic__grid-line--v2 {
+    left: 66%;
+}
+
+/* 中心のシェイプ */
+.monokuro-graphic__center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: monokuroCenterRotate 15s linear infinite;
+}
+
+.monokuro-graphic__center::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 0, 255, 0.4);
+    /* Magenta core */
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.8), 0 0 40px rgba(255, 0, 255, 0.4);
+    animation: monokuroCorePulse 1.5s ease-in-out infinite, rgbHueRotateDot 8s linear infinite;
+}
+
+@keyframes monokuroCenterRotate {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes monokuroCorePulse {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.4);
+        opacity: 1;
+        box-shadow: 0 0 40px rgba(255, 0, 255, 1), 0 0 80px rgba(255, 0, 255, 0.6);
+    }
+}
+
+/* 浮遊ドット */
+.monokuro-graphic__dots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.monokuro-float-dot {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+}
+
+/* 装飾ライン */
+.monokuro-graphic__deco-line {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.monokuro-graphic__deco-line--1 {
+    width: 200px;
+    top: 8%;
+    right: -80px;
+    transform: rotate(-25deg);
+}
+
+.monokuro-graphic__deco-line--2 {
+    width: 180px;
+    bottom: 12%;
+    left: -70px;
+    transform: rotate(20deg);
+}
+
+/* ========================================
+   マーキー
+======================================== */
+.monokuro-marquee {
+    position: absolute;
+    bottom: 90px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    opacity: 0;
+    z-index: 15;
+}
+
+.monokuro-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: monokuroMarquee 35s linear infinite;
+}
+
+.monokuro-marquee__item {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    color: rgba(0, 255, 255, 0.8);
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    white-space: nowrap;
+    padding: 0 25px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    animation: rgbHueRotateText 8s linear infinite;
+}
+
+@keyframes rgbHueRotateText {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+.monokuro-marquee__item::after {
+    content: '◇';
+    font-size: 6px;
+    opacity: 0.5;
+}
+
+@keyframes monokuroMarquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* ========================================
+   スクロールインジケーター
+======================================== */
+.monokuro-scroll {
+    position: absolute;
+    bottom: 30px;
+    left: var(--mono-side-padding);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    z-index: 20;
+}
+
+.monokuro-scroll__text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: var(--mono-gray);
+    writing-mode: vertical-rl;
+}
+
+.monokuro-scroll__line {
+    width: 1px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.monokuro-scroll__line::after {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 0;
+    width: 1px;
+    height: 50px;
+    background: var(--mono-white);
+    animation: monokuroScrollDown 1.8s ease-in-out infinite;
+}
+
+@keyframes monokuroScrollDown {
+    0% {
+        top: -50px;
+    }
+
+    100% {
+        top: 50px;
+    }
+}
+
+/* ========================================
+   レスポンシブ
+======================================== */
+@media (max-width: 1024px) {
+    .monokuro-fv {
+        padding: 0 30px;
+    }
+
+    .monokuro-header {
+        padding: 25px 30px;
+    }
+
+    .monokuro-header__nav {
+        display: none;
+    }
+
+    .monokuro-header__menu-toggle {
+        display: flex;
+    }
+
+    .monokuro-fv__split {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .monokuro-fv__left {
+        flex: none;
+        padding-right: 0;
+        text-align: center;
+    }
+
+    .monokuro-fv__content {
+        margin: 0 auto;
+        position: relative;
+        top: -5vh;
+    }
+
+    .monokuro-fv__main {
+        font-size: clamp(2rem, 6vw, 2.5rem);
+    }
+
+    .monokuro-fv__sub {
+        margin-top: 20px;
+    }
+
+    .monokuro-fv__cta {
+        margin-top: 35px;
+    }
+
+    .monokuro-cta-link::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .monokuro-fv__right {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.3;
+        /* モバイル時は背景化して薄く */
+    }
+
+    .monokuro-scroll {
+        left: 30px;
+    }
+}
+
+@media (max-width: 599px) {
+    :root {
+        --mono-side-padding: 20px;
+    }
+
+    .monokuro-fv {
+        padding: 0 var(--mono-side-padding);
+    }
+
+    .monokuro-header {
+        padding: 20px var(--mono-side-padding);
+    }
+
+    .monokuro-scroll {
+        display: none;
+        /* スマホではスクロール表示なし（必要に応じて） */
+    }
+
+    .monokuro-marquee {
+        bottom: 40px;
+    }
+}

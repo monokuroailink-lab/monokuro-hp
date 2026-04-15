@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTACT | モノクロ。</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page-heading {
+            padding: 200px max(4vw, 50px) 100px;
+            border-bottom: 1px solid #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .page-heading h1 {
+            font-family: var(--font-family-en);
+            font-size: clamp(40px, 8vw, 80px);
+            margin: 0 0 10px 0;
+            color: #fff;
+            letter-spacing: 0.05em;
+        }
+
+        .page-heading p {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            color: #aaa;
+            margin: 0;
+        }
+
+        .subpage-main {
+            position: relative;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .subpage-main * {
+            pointer-events: auto;
+        }
+
+        .form-group {
+            margin-bottom: 40px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .form-label span {
+            color: #fff;
+            background: #333;
+            font-size: 10px;
+            margin-left: 10px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            display: inline-block;
+            transform: translateY(-2px);
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-bottom: 1px solid #333;
+            border-radius: 0;
+            font-size: 16px;
+            font-family: inherit;
+            background-color: transparent;
+            color: #fff;
+            transition: border-color var(--transition-medium);
+            box-sizing: border-box;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-bottom-color: #fff;
+        }
+
+        .form-textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 60px auto 0;
+            padding: 20px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.2em;
+            transition: all var(--transition-medium);
+            text-transform: uppercase;
+            text-align: center;
+            font-family: var(--font-family-en);
+            margin-bottom: 100px;
+        }
+
+        .submit-btn:hover {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body class="colors-dark">
+    <div class="noise-overlay"></div>
+    <header class="header">
+        <a href="index.html" class="header-logo js-crackin-text" data-chaffle="en">MONOKURO INC.</a>
+        <nav class="header-nav font-en">
+            <ul>
+                <li><a href="about.html" class="js-crackin-text" data-chaffle="en">About</a></li>
+                <li><a href="services.html" class="js-crackin-text" data-chaffle="en">Services</a></li>
+                <li><a href="works.html" class="js-crackin-text" data-chaffle="en">Works</a></li>
+                <li><a href="contact.html" class="js-crackin-text" data-chaffle="en" style="color: #aaa;">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="subpage-main">
+        <section class="sec-mv">
+            <div class="inner">
+                <p class="supportText js-crackin-text" data-chaffle="en">URAKATA DESIGN FIRM</p>
+
+                <div class="circle rotate_left_inf">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%">
+                        <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"
+                            fill="transparent" />
+                        <text fill="#ffffff" font-family="'Oswald', sans-serif" font-weight="700">
+                            <textPath href="#circlePath" font-size="11" letter-spacing="3.2">READY TO HEAR YOUR VOICE .
+                            </textPath>
+                        </text>
+                    </svg>
+                </div>
+
+                <h1 class="c-ttl__01">
+                    <span class="font-en js-crackin-text" data-chaffle="en">CONTACT_</span>
+                    <span class="jp-main">
+                        <span class="js-crackin-text" data-chaffle="ja">お問い合わせ</span>
+                    </span>
+                </h1>
+
+                <ul class="sec-mv__tag">
+                    <li class="sec-mv__tag-item"><span class="js-crackin-text" data-chaffle="en">ANYTIME</span></li>
+                    <li class="sec-mv__tag-item"><span class="js-crackin-text" data-chaffle="en">ANYWHERE</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="section container" style="max-width: 800px;">
+            <p class="text" style="text-align: center; margin-bottom: 60px;">
+                新規プロジェクトのご相談、協業のご提案など、<br>お気軽にお問い合わせください。<br>内容を確認後、担当者よりご連絡いたします。
+            </p>
+
+            <form action="#" onsubmit="event.preventDefault(); alert('送信機能はバックエンド連携後に有効になります。');">
+                <div class="form-group">
+                    <label class="form-label js-crackin-text" data-chaffle="ja">会社名・組織名</label>
+                    <input class="form-input" type="text" placeholder="例：株式会社モノクロ">
+                </div>
+                <div class="form-group">
+                    <label class="form-label"><span class="js-crackin-text" data-chaffle="ja"
+                            style="background:none; padding:0; font-size:14px; margin:0;">お名前</span>
+                        <span>必須</span></label>
+                    <input class="form-input" type="text" placeholder="例：山田 太郎" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label"><span class="js-crackin-text" data-chaffle="ja"
+                            style="background:none; padding:0; font-size:14px; margin:0;">メールアドレス</span>
+                        <span>必須</span></label>
+                    <input class="form-input" type="email" placeholder="例：info@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label"><span class="js-crackin-text" data-chaffle="ja"
+                            style="background:none; padding:0; font-size:14px; margin:0;">お問い合わせ内容</span>
+                        <span>必須</span></label>
+                    <textarea class="form-textarea" placeholder="ご相談内容を具体的にご記入ください。" required></textarea>
+                </div>
+                <div>
+                    <button type="submit" class="submit-btn js-crackin-text" data-chaffle="en">SEND MESSAGE</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-logo js-crackin-text" data-chaffle="en">MONOKURO INC.</div>
+        <nav class="footer-nav">
+            <ul>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="works.html">Works</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <p class="footer-copy js-crackin-text" data-chaffle="en">&copy; 2026 MONOKURO INC. All Rights Reserved.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>

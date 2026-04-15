@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モノクロ。 | DIGITAL CREATIVE FIRM</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Three.js Import Map -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+
+<body class="colors-dark">
+    <!-- Texture Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- 3D Canvas Background -->
+    <div id="canvas-container"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="header-logo js-crackin-text" data-chaffle="en">MONOKURO INC.</a>
+        <nav class="header-nav font-en">
+            <ul>
+                <li><a href="#about" class="js-crackin-text" data-chaffle="en">About</a></li>
+                <li><a href="#services" class="js-crackin-text" data-chaffle="en">Services</a></li>
+                <li><a href="#works" class="js-crackin-text" data-chaffle="en">Works</a></li>
+                <li><a href="#contact" class="js-crackin-text" data-chaffle="en">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- FV -->
+        <section class="sec-mv">
+            <div class="inner">
+                <p class="supportText js-crackin-text" data-chaffle="en">URAKATA DESIGN FIRM</p>
+
+                <div class="circle rotate_left_inf">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%">
+                        <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"
+                            fill="transparent" />
+                        <text fill="#ffffff" font-family="'Oswald', sans-serif" font-weight="700">
+                            <textPath href="#circlePath" font-size="11.5" letter-spacing="3.2">IN THE SHADOWS WE CREATE . </textPath>
+                        </text>
+                    </svg>
+                </div>
+
+                <h1 class="c-ttl__01">
+                    <span class="font-en js-crackin-text" data-chaffle="en">DESIGN_</span>
+                    <span class="jp-main">
+                        <span class="js-crackin-text" data-chaffle="ja">想いを、</span><br>
+                        <span class="js-crackin-text" data-chaffle="ja">伝わるかたちに。</span>
+                    </span>
+                </h1>
+
+                <ul class="sec-mv__tag">
+                    <li class="sec-mv__tag-item"><span class="js-crackin-text" data-chaffle="en">WEB DESIGN</span></li>
+                    <li class="sec-mv__tag-item"><span class="js-crackin-text" data-chaffle="en">BRANDING</span></li>
+                    <li class="sec-mv__tag-item"><span class="js-crackin-text" data-chaffle="en">MARKETING</span></li>
+                </ul>
+
+                <p class="sec-mv__copy js-crackin-text" data-chaffle="en">&copy; 2026 MONOKURO INC.</p>
+
+                <a href="#contact" class="sec-mv__btn">
+                    <span class="jp js-crackin-text" data-chaffle="ja">お気軽に<br>お問い合わせ<br>ください</span>
+                    <span class="en js-crackin-text" data-chaffle="en">CONTACT US</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section id="about" class="section container">
+            <h2 class="section-title js-crackin-text" data-chaffle="en">ABOUT</h2>
+            <p class="section-subtitle js-crackin-text" data-chaffle="ja">私たちについて</p>
+
+            <h3 class="lead-text js-crackin-text" data-chaffle="ja" style="margin-bottom: 40px;">想いを、伝わるかたちに。</h3>
+            <p class="text" style="margin-bottom: 80px;">
+                人の内側に眠る"色"を、外に出して世界に届く形にする。<br>
+                才能も情熱も、伝わらなければ存在しないのと同じ。<br>
+                だからモノクロ。は、構造と言語と発信で「売れる仕組み」を整える。<br><br>
+                売れるとは、信頼の結果。<br>
+                数字を上げる前に、関係をつくる。小手先のマーケより、誠実さと対話。<br>
+                LTVは「お金の長さ」でなく「関係の太さ」で決まる。
+            </p>
+
+            <div style="border-top: 1px solid #333; padding-top: 80px;">
+                <h3 class="font-en js-crackin-text" data-chaffle="en"
+                    style="font-size: 32px; margin-bottom: 40px; text-transform: uppercase;">Philosophy</h3>
+
+                <div style="margin-bottom: 40px;">
+                    <h4 class="js-crackin-text" data-chaffle="ja"
+                        style="font-size: 20px; font-weight: 700; margin-bottom: 10px; border-left: 2px solid #fff; padding-left: 15px;">
+                        自分は白、顧客は色。</h4>
+                    <p class="text">主役に光を当てるために、自分は背景へ。ウラカタに徹するほど、相手は正しく輝く。白は混ざればどんな色でも引き立てる。</p>
+                </div>
+
+                <div style="margin-bottom: 40px;">
+                    <h4 class="js-crackin-text" data-chaffle="ja"
+                        style="font-size: 20px; font-weight: 700; margin-bottom: 10px; border-left: 2px solid #fff; padding-left: 15px;">
+                        技術は手段、目的は"想いの伝達"。</h4>
+                    <p class="text">AIでもデザインでも撮影でも、全部は「伝えるための道具」。道具を振り回してマウントを取る暇があるなら、顧客の"本音"を聞く方がよほど価値がある。</p>
+                </div>
+
+                <div style="margin-bottom: 40px;">
+                    <h4 class="js-crackin-text" data-chaffle="ja"
+                        style="font-size: 20px; font-weight: 700; margin-bottom: 10px; border-left: 2px solid #fff; padding-left: 15px;">
+                        現場と戦略の二刀流。</h4>
+                    <p class="text">机上の空論も、現場の精神論もどっちも足りない。構造系の理性と、現場の泥臭さ、その両方を知っているから強い。だから、小さな会社の「実務」から「戦略」まで背負える。</p>
+                </div>
+            </div>
+
+            <div style="text-align: right; margin-top: 40px;">
+                <a href="about.html" class="font-en" style="color: #fff; text-decoration: none; font-size: 14px; font-weight: 700; letter-spacing: 0.1em;">VIEW MORE &rarr;</a>
+            </div>
+        </section>
+
+        <!-- Services -->
+        <section id="services" class="section container" style="border-top: 1px solid #333;">
+            <h2 class="section-title js-crackin-text" data-chaffle="en">SERVICES</h2>
+            <p class="section-subtitle js-crackin-text" data-chaffle="ja">事業内容</p>
+
+            <div class="top-service-item" style="display: flex; flex-wrap: wrap; gap: 60px; margin-bottom: 80px; align-items: center;">
+                <div style="flex: 1 1 400px; background-color: #111; aspect-ratio: 4/3; overflow: hidden;"><img src="images/service-web.jpg" alt="Web & UI Design" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                <div style="flex: 1 1 350px;">
+                    <span class="font-en js-crackin-text" data-chaffle="en" style="font-size: 24px; color: #555; font-weight: 300; display: block; margin-bottom: 10px; letter-spacing: 0.1em;">01</span>
+                    <h3 class="font-en js-crackin-text" data-chaffle="en" style="font-size: 40px; margin: 0 0 20px 0; font-weight: 700; color: #fff;">Web & UI Design</h3>
+                    <p class="text" style="margin-bottom: 30px;">企業の目的に合わせた、洗練されたWebサイトやアプリケーションのUI設計・デザインを提供します。見た目の美しさだけでなく、ユーザー体験（UX）を最適化し、KPI達成に繋げます。</p>
+                    <ul style="padding-left: 20px; color: #fff; list-style: none;">
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>コーポレートサイト制作</li>
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>ランディングページ（LP）制作</li>
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>UI/UXデザイン設計</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="top-service-item" style="display: flex; flex-wrap: wrap; gap: 60px; margin-bottom: 80px; align-items: center; flex-direction: row-reverse;">
+                <div style="flex: 1 1 400px; background-color: #111; aspect-ratio: 4/3; overflow: hidden;"><img src="images/service-branding.jpg" alt="Branding Strategy" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                <div style="flex: 1 1 350px;">
+                    <span class="font-en js-crackin-text" data-chaffle="en" style="font-size: 24px; color: #555; font-weight: 300; display: block; margin-bottom: 10px; letter-spacing: 0.1em;">02</span>
+                    <h3 class="font-en js-crackin-text" data-chaffle="en" style="font-size: 40px; margin: 0 0 20px 0; font-weight: 700; color: #fff;">Branding Strategy</h3>
+                    <p class="text" style="margin-bottom: 30px;">企業の独自の価値（USP）を見出し、一貫したブランド体験を構築します。ロゴデザインからコンセプトメイキング、コピーライティングまでトータルでサポートします。</p>
+                    <ul style="padding-left: 20px; color: #fff; list-style: none;">
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>コンセプト設計・言語化</li>
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>ロゴ・CI/VI開発</li>
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>各種ブランドツール制作</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="top-service-item" style="display: flex; flex-wrap: wrap; gap: 60px; margin-bottom: 40px; align-items: center;">
+                <div style="flex: 1 1 400px; background-color: #111; aspect-ratio: 4/3; overflow: hidden;"><img src="images/service-marketing.jpg" alt="Digital Marketing" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                <div style="flex: 1 1 350px;">
+                    <span class="font-en js-crackin-text" data-chaffle="en" style="font-size: 24px; color: #555; font-weight: 300; display: block; margin-bottom: 10px; letter-spacing: 0.1em;">03</span>
+                    <h3 class="font-en js-crackin-text" data-chaffle="en" style="font-size: 40px; margin: 0 0 20px 0; font-weight: 700; color: #fff;">Digital Marketing</h3>
+                    <p class="text" style="margin-bottom: 30px;">作った後のフェーズまで伴走します。データに基づいた確実な戦略立案と運用により、クライアントのビジネス成長を加速させます。</p>
+                    <ul style="padding-left: 20px; color: #fff; list-style: none;">
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>広告クリエイティブ制作</li>
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>SNS運用・戦略設計</li>
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>データ分析・改善提案</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="text-align: right; margin-top: 40px;">
+                <a href="services.html" class="font-en" style="color: #fff; text-decoration: none; font-size: 14px; font-weight: 700; letter-spacing: 0.1em;">VIEW MORE &rarr;</a>
+            </div>
+        </section>
+
+        <!-- Works -->
+        <section id="works" class="section container" style="border-top: 1px solid #333;">
+            <h2 class="section-title js-crackin-text" data-chaffle="en">WORKS</h2>
+            <p class="section-subtitle js-crackin-text" data-chaffle="ja">制作実績</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 60px;">
+                <a href="#" style="display: block; text-decoration: none; color: inherit; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                    <div style="aspect-ratio: 16/10; background-color: #111; margin-bottom: 20px; overflow: hidden;"><img src="images/work-01.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                    <div class="font-en js-crackin-text" data-chaffle="en" style="font-size: 12px; color: #aaa; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.1em;">Web Design / Branding</div>
+                    <h3 style="font-size: 16px; line-height: 1.6; font-weight: 700; color: #fff; margin: 0;">株式会社〇〇様 コーポレートサイトリニューアル</h3>
+                </a>
+                <a href="#" style="display: block; text-decoration: none; color: inherit; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                    <div style="aspect-ratio: 16/10; background-color: #111; margin-bottom: 20px; overflow: hidden;"><img src="images/work-02.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                    <div class="font-en js-crackin-text" data-chaffle="en" style="font-size: 12px; color: #aaa; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.1em;">LP Design / Marketing</div>
+                    <h3 style="font-size: 16px; line-height: 1.6; font-weight: 700; color: #fff; margin: 0;">新規サービス立ち上げプロモーション</h3>
+                </a>
+                <a href="#" style="display: block; text-decoration: none; color: inherit; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                    <div style="aspect-ratio: 16/10; background-color: #111; margin-bottom: 20px; overflow: hidden;"><img src="images/work-03.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                    <div class="font-en js-crackin-text" data-chaffle="en" style="font-size: 12px; color: #aaa; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.1em;">UI/UX / App Design</div>
+                    <h3 style="font-size: 16px; line-height: 1.6; font-weight: 700; color: #fff; margin: 0;">業務支援SaaS管理画面UIデザイン</h3>
+                </a>
+            </div>
+
+            <div style="text-align: center; margin-top: 80px;">
+                <a href="works.html" class="font-en" style="color: #fff; text-decoration: none; font-size: 14px; font-weight: 700; letter-spacing: 0.1em;">VIEW ALL WORKS &rarr;</a>
+            </div>
+        </section>
+
+        <!-- Contact CTA -->
+        <section id="contact" class="section container"
+            style="text-align: center; border-top: 1px solid #333; padding-bottom: 250px;">
+            <h2 class="section-title js-crackin-text" data-chaffle="en">CONTACT</h2>
+            <p class="section-subtitle js-crackin-text" data-chaffle="ja">お問い合わせ</p>
+            <p class="lead-text js-crackin-text" data-chaffle="ja" style="margin-bottom: 2rem;">
+                あなたの熱を、かたちにしませんか。
+            </p>
+            <p class="text" style="margin-bottom: 4rem;">
+                新規プロジェクトのご相談、協業のご提案など、<br>お気軽にお問い合わせください。
+            </p>
+            <a href="contact.html" class="sec-mv__btn"
+                style="position: absolute; left: 50%; transform: translateX(-50%); bottom: auto; right: auto; margin-top: 2rem;">
+                <span class="jp js-crackin-text" data-chaffle="ja">お問い合わせを<br>はじめる</span>
+                <span class="en js-crackin-text" data-chaffle="en">CONTACT US</span>
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo js-crackin-text" data-chaffle="en">MONOKURO INC.</div>
+        <nav class="footer-nav">
+            <ul>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="works.html">Works</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <p class="footer-copy js-crackin-text" data-chaffle="en">&copy; 2026 MONOKURO INC. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="3d-scene.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

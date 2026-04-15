@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モノクロ。 | BRUTALIST MONOCHROME - DIGITAL CREATIVE FIRM</title>
+    <link rel="stylesheet" href="../../style.css">
+
+    <!-- Three.js Import Map -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+
+<body class="colors-dark">
+    <!-- Texture Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- 3D Canvas Background -->
+    <div id="canvas-container"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="header-logo js-crackin-text" data-chaffle="en">MONOKURO INC.</a>
+        <nav class="header-nav font-en">
+            <ul>
+                <li><a href="#about" class="js-crackin-text" data-chaffle="en">About</a></li>
+                <li><a href="#services" class="js-crackin-text" data-chaffle="en">Services</a></li>
+                <li><a href="#works" class="js-crackin-text" data-chaffle="en">Works</a></li>
+                <li><a href="#contact" class="js-crackin-text" data-chaffle="en">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- FV -->
+        <section class="sec-mv">
+            <div class="inner">
+                <p class="supportText js-crackin-text" data-chaffle="en">URAKATA BUSINESS PARTNER</p>
+
+                <div class="circle rotate_left_inf">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%">
+                        <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"
+                            fill="transparent" />
+                        <text fill="#ffffff" font-family="'Oswald', sans-serif" font-weight="700">
+                            <textPath href="#circlePath" font-size="11.5" letter-spacing="3.2">IN THE SHADOWS WE BUILD THE SYSTEM . </textPath>
+                        </text>
+                    </svg>
+                </div>
+
+                <h1 class="c-ttl__01">
+                    <span class="font-en js-crackin-text" data-chaffle="en">STRATEGY_</span>
+                    <span class="jp-main">
+                        <span class="js-crackin-text" data-chaffle="ja">想いを、</span><br>
+                        <span class="js-crackin-text" data-chaffle="ja">伝わるかたちに。</span>
+                    </span>
+                </h1>
+
+                <ul class="sec-mv__tag">
+                    <li class="sec-mv__tag-item"><span class="js-crackin-text" data-chaffle="en">STRATEGY</span></li>
+                    <li class="sec-mv__tag-item"><span class="js-crackin-text" data-chaffle="ja">LANGUAGE (言語化)</span></li>
+                    <li class="sec-mv__tag-item"><span class="js-crackin-text" data-chaffle="ja">OPERATION (実務)</span></li>
+                </ul>
+
+                <p class="sec-mv__copy js-crackin-text" data-chaffle="en">&copy; 2026 MONOKURO INC.</p>
+
+                <a href="#contact" class="sec-mv__btn">
+                    <span class="jp js-crackin-text" data-chaffle="ja">お気軽に<br>お問い合わせ<br>ください</span>
+                    <span class="en js-crackin-text" data-chaffle="en">CONTACT US</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section id="about" class="section container">
+            <h2 class="section-title js-crackin-text" data-chaffle="en">ABOUT</h2>
+            <p class="section-subtitle js-crackin-text" data-chaffle="ja">私たちについて</p>
+
+            <h3 class="lead-text js-crackin-text" data-chaffle="ja" style="margin-bottom: 40px;">想いを、伝わるかたちに。</h3>
+            <p class="text" style="margin-bottom: 80px;">
+                人の内側に眠る「熱」や「独自の色」。<br>
+                どれほどの才能も情熱も、外に伝わらなければ存在しないのと同じです。<br>
+                だからこそ私たちは、構造と言語と発信で「売れる仕組み」を整えます。<br><br>
+                売れるとは、信頼の結果。<br>
+                数字を追う前に、関係をつくる。小手先のマーケティングよりも、誠実さと対話を。<br>
+                LTV（顧客生涯価値）は「お金の長さ」ではなく「関係の太さ」で決まるのだと、私たちは信じています。
+            </p>
+
+            <div style="border-top: 1px solid #333; padding-top: 80px;">
+                <h3 class="font-en js-crackin-text" data-chaffle="en"
+                    style="font-size: 32px; margin-bottom: 40px; text-transform: uppercase;">Core Values</h3>
+
+                <div style="margin-bottom: 40px;">
+                    <h4 class="js-crackin-text" data-chaffle="ja"
+                        style="font-size: 20px; font-weight: 700; margin-bottom: 10px; border-left: 2px solid #fff; padding-left: 15px;">
+                        01. 自分は白、顧客は色。</h4>
+                    <p class="text">主役に光を当てるために、自らは背景へ。ウラカタに徹するほど、相手は正しく輝き出します。自分たちの色を押し付けるのではなく、どんな色も引き立てる「白」であり続けます。</p>
+                </div>
+
+                <div style="margin-bottom: 40px;">
+                    <h4 class="js-crackin-text" data-chaffle="ja"
+                        style="font-size: 20px; font-weight: 700; margin-bottom: 10px; border-left: 2px solid #fff; padding-left: 15px;">
+                        02. 光を奪わず、光をつくる。</h4>
+                    <p class="text">主役の隣で、主役以上に責任を持つ。しかし、拍手はすべて相手へ返す。失敗は自らの責任とし、成功はすべて相手の功績にする。それが裏方に生きる人間の矜持です。</p>
+                </div>
+
+                <div style="margin-bottom: 40px;">
+                    <h4 class="js-crackin-text" data-chaffle="ja"
+                        style="font-size: 20px; font-weight: 700; margin-bottom: 10px; border-left: 2px solid #fff; padding-left: 15px;">
+                        03. 現場と戦略の二刀流。</h4>
+                    <p class="text">机上の空論だけでも、現場の精神論だけでも足りません。構造を俯瞰する「理性」と、現場に飛び込む「泥臭さ」。その両方を知っているからこそ、実務から戦略までを一気通貫で背負うことができます。</p>
+                </div>
+
+                <div style="margin-bottom: 40px;">
+                    <h4 class="js-crackin-text" data-chaffle="ja"
+                        style="font-size: 20px; font-weight: 700; margin-bottom: 10px; border-left: 2px solid #fff; padding-left: 15px;">
+                        04. 技術は手段、目的は「想いの伝達」。</h4>
+                    <p class="text">AIも、デザインも、すべては伝えるための道具に過ぎません。最先端の道具を振り回して自己満足に浸る暇があるのなら、誰よりも顧客の「本音」に耳を澄ませ、課題を見つけ出す人間でありたい。</p>
+                </div>
+
+                <div style="margin-bottom: 40px;">
+                    <h4 class="js-crackin-text" data-chaffle="ja"
+                        style="font-size: 20px; font-weight: 700; margin-bottom: 10px; border-left: 2px solid #fff; padding-left: 15px;">
+                        05. 誰より泥をかぶり、静かに燃える。</h4>
+                    <p class="text">言われたことだけをこなすのは、ウラカタではありません。気づき、察し、先回りし、泥を被り、すべての軌道修正を引き受ける。叫ばずとも内側には激しい熱を宿し、主役が飛躍した瞬間の喜びを世界一分かち合う存在になります。</p>
+                </div>
+            </div>
+
+            <div style="text-align: right; margin-top: 40px;">
+                <a href="#" class="font-en" style="color: #fff; text-decoration: none; font-size: 14px; font-weight: 700; letter-spacing: 0.1em;">VIEW MORE &rarr;</a>
+            </div>
+        </section>
+
+        <!-- Services -->
+        <section id="services" class="section container" style="border-top: 1px solid #333;">
+            <h2 class="section-title js-crackin-text" data-chaffle="en">SERVICES</h2>
+            <p class="section-subtitle js-crackin-text" data-chaffle="ja">事業内容</p>
+
+            <div class="top-service-item" style="display: flex; flex-wrap: wrap; gap: 60px; margin-bottom: 80px; align-items: center;">
+                <div style="flex: 1 1 400px; background-color: #111; aspect-ratio: 4/3; overflow: hidden;"><img src="../../images/service-web.jpg" alt="Business Strategy" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                <div style="flex: 1 1 350px;">
+                    <span class="font-en js-crackin-text" data-chaffle="en" style="font-size: 24px; color: #555; font-weight: 300; display: block; margin-bottom: 10px; letter-spacing: 0.1em;">01</span>
+                    <h3 class="font-en js-crackin-text" data-chaffle="en" style="font-size: 40px; margin: 0 0 20px 0; font-weight: 700; color: #fff;">Business Strategy</h3>
+                    <p class="text" style="font-size: 16px; margin-bottom: 20px;" class="js-crackin-text" data-chaffle="ja">戦略設計と構造化</p>
+                    <p class="text" style="margin-bottom: 30px;">「どう売るか」の前に「なぜ売るか」「誰に売るか」の根幹を整理します。ビジネスモデルの構築から、顧客との信頼関係（LTV）を最大化させるための全体設計と導線構築を行います。</p>
+                    <ul style="padding-left: 20px; color: #fff; list-style: none;">
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>ビジネスモデル設計・構築</li>
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>マーケティングファネル設計</li>
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>顧客体験（CX/LTV）最適化</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="top-service-item" style="display: flex; flex-wrap: wrap; gap: 60px; margin-bottom: 80px; align-items: center; flex-direction: row-reverse;">
+                <div style="flex: 1 1 400px; background-color: #111; aspect-ratio: 4/3; overflow: hidden;"><img src="../../images/service-branding.jpg" alt="Verbalization" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                <div style="flex: 1 1 350px;">
+                    <span class="font-en js-crackin-text" data-chaffle="en" style="font-size: 24px; color: #555; font-weight: 300; display: block; margin-bottom: 10px; letter-spacing: 0.1em;">02</span>
+                    <h3 class="font-en js-crackin-text" data-chaffle="en" style="font-size: 40px; margin: 0 0 20px 0; font-weight: 700; color: #fff;">Verbalization</h3>
+                    <p class="text" style="font-size: 16px; margin-bottom: 20px;" class="js-crackin-text" data-chaffle="ja">言語化・コンセプトメイク</p>
+                    <p class="text" style="margin-bottom: 30px;">内に秘めた想いや、まだ言葉になっていない魅力を言語化します。コンセプト設計からコピーライティングまで、顧客の「色」を最も強く正確に発信するための「言葉の武器」を作ります。</p>
+                    <ul style="padding-left: 20px; color: #fff; list-style: none;">
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>パーパス・ビジョン策定</li>
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>コピーライティング・執筆</li>
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>ブランド・アイデンティティ構築</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="top-service-item" style="display: flex; flex-wrap: wrap; gap: 60px; margin-bottom: 40px; align-items: center;">
+                <div style="flex: 1 1 400px; background-color: #111; aspect-ratio: 4/3; overflow: hidden;"><img src="../../images/service-marketing.jpg" alt="Operations" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                <div style="flex: 1 1 350px;">
+                    <span class="font-en js-crackin-text" data-chaffle="en" style="font-size: 24px; color: #555; font-weight: 300; display: block; margin-bottom: 10px; letter-spacing: 0.1em;">03</span>
+                    <h3 class="font-en js-crackin-text" data-chaffle="en" style="font-size: 40px; margin: 0 0 20px 0; font-weight: 700; color: #fff;">Operations & Marketing</h3>
+                    <p class="text" style="font-size: 16px; margin-bottom: 20px;" class="js-crackin-text" data-chaffle="ja">現場特化型・実務伴走</p>
+                    <p class="text" style="margin-bottom: 30px;">戦略を描いて終わりではありません。広告運用、SNS発信、日々の実務改善まで、泥臭い現場の作業を共に手を動かしながら伴走します。</p>
+                    <ul style="padding-left: 20px; color: #fff; list-style: none;">
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>SNS運用・コンテンツ制作</li>
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>集客導線・広告運用サポート</li>
+                        <li class="js-crackin-text" data-chaffle="ja" style="margin-bottom: 10px; position: relative; font-size: 14px; padding-left: 15px;"><span style="position: absolute; left: 0; color: #555;">-</span>チーム構築・教育システム化</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="text-align: right; margin-top: 40px;">
+                <a href="#" class="font-en" style="color: #fff; text-decoration: none; font-size: 14px; font-weight: 700; letter-spacing: 0.1em;">VIEW MORE &rarr;</a>
+            </div>
+        </section>
+
+        <!-- Works -->
+        <section id="works" class="section container" style="border-top: 1px solid #333;">
+            <h2 class="section-title js-crackin-text" data-chaffle="en">WORKS</h2>
+            <p class="section-subtitle js-crackin-text" data-chaffle="ja">制作実績</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 60px;">
+                <a href="#" style="display: block; text-decoration: none; color: inherit; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                    <div style="aspect-ratio: 16/10; background-color: #111; margin-bottom: 20px; overflow: hidden;"><img src="../../images/work-01.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                    <div class="font-en js-crackin-text" data-chaffle="en" style="font-size: 12px; color: #aaa; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.1em;">Business Strategy</div>
+                    <h3 style="font-size: 16px; line-height: 1.6; font-weight: 700; color: #fff; margin: 0;">新規事業立ち上げにおける戦略立案と伴走支援</h3>
+                </a>
+                <a href="#" style="display: block; text-decoration: none; color: inherit; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                    <div style="aspect-ratio: 16/10; background-color: #111; margin-bottom: 20px; overflow: hidden;"><img src="../../images/work-02.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                    <div class="font-en js-crackin-text" data-chaffle="en" style="font-size: 12px; color: #aaa; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.1em;">Operations</div>
+                    <h3 style="font-size: 16px; line-height: 1.6; font-weight: 700; color: #fff; margin: 0;">属人化からの脱却：集客・教育システムの自動化</h3>
+                </a>
+                <a href="#" style="display: block; text-decoration: none; color: inherit; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                    <div style="aspect-ratio: 16/10; background-color: #111; margin-bottom: 20px; overflow: hidden;"><img src="../../images/work-03.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                    <div class="font-en js-crackin-text" data-chaffle="en" style="font-size: 12px; color: #aaa; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.1em;">Verbalization</div>
+                    <h3 style="font-size: 16px; line-height: 1.6; font-weight: 700; color: #fff; margin: 0;">ブランドコンセプトの言語化・リニューアル支援</h3>
+                </a>
+            </div>
+
+            <div style="text-align: center; margin-top: 80px;">
+                <a href="#" class="font-en" style="color: #fff; text-decoration: none; font-size: 14px; font-weight: 700; letter-spacing: 0.1em;">VIEW ALL WORKS &rarr;</a>
+            </div>
+        </section>
+
+        <!-- Contact CTA -->
+        <section id="contact" class="section container"
+            style="text-align: center; border-top: 1px solid #333; padding-bottom: 250px;">
+            <h2 class="section-title js-crackin-text" data-chaffle="en">CONTACT</h2>
+            <p class="section-subtitle js-crackin-text" data-chaffle="ja">お問い合わせ</p>
+            <p class="lead-text js-crackin-text" data-chaffle="ja" style="margin-bottom: 2rem;">
+                あなたの熱を、かたちにしませんか。
+            </p>
+            <p class="text" style="margin-bottom: 4rem;">
+                新規プロジェクトのご相談、協業のご提案など、<br>お気軽にお問い合わせください。
+            </p>
+            <a href="#" class="sec-mv__btn"
+                style="position: absolute; left: 50%; transform: translateX(-50%); bottom: auto; right: auto; margin-top: 2rem;">
+                <span class="jp js-crackin-text" data-chaffle="ja">お問い合わせを<br>はじめる</span>
+                <span class="en js-crackin-text" data-chaffle="en">CONTACT US</span>
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo js-crackin-text" data-chaffle="en">MONOKURO INC.</div>
+        <nav class="footer-nav">
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Works</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <p class="footer-copy js-crackin-text" data-chaffle="en">&copy; 2026 MONOKURO INC. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../../gsap.min.js"></script>
+    <script src="../../ScrollTrigger.min.js"></script>
+    <script type="module" src="../../3d-scene.js"></script>
+    <script src="../../script.js"></script>
+</body>
+
+</html>

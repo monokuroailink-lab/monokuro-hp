@@ -1,0 +1,343 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;700;800&family=Noto+Sans+JP:wght@400;500;700;800;900&family=Oswald:wght@400;700&display=swap');
+
+:root {
+  --color-bg: #050505;
+  --color-text: #ffffff;
+  --font-family-base: 'Noto Sans JP', sans-serif;
+  --font-family-en: 'Oswald', 'Libre Franklin', sans-serif;
+  --transition-medium: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Film Grain Texture */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  /* Below texts, over background */
+  opacity: 0.2;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: screen;
+}
+
+#canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  /* Below UI elements (10+), above noise layout */
+  pointer-events: auto;
+}
+
+/* Header */
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px max(4vw, 30px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.header-logo {
+  font-family: var(--font-family-en);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  pointer-events: auto;
+}
+
+.header-nav ul {
+  display: flex;
+  gap: 3vw;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  pointer-events: auto;
+}
+
+.header-nav a {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: color var(--transition-medium);
+}
+
+.header-nav a:hover {
+  color: #888;
+}
+
+/* ==========================================================
+   Exact Crackin Space - Textured Dark Mode
+   ========================================================== */
+.sec-mv {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-height: 700px;
+  /* Not a flat color, rich deep radial glow behind the sphere */
+  background: radial-gradient(circle at 70% 30%, #1c1c1f 0%, #030303 90%);
+  color: var(--color-text);
+  box-sizing: border-box;
+}
+
+.sec-mv .inner {
+  position: absolute;
+  inset: 0;
+  padding: max(4vw, 30px);
+  pointer-events: none;
+  z-index: 10;
+  /* Bring text cleanly above 3D WebGL */
+}
+
+.sec-mv .inner * {
+  pointer-events: none;
+}
+
+/* Typography styles matching Crackin accurately */
+.supportText {
+  position: absolute;
+  top: max(4vw, 60px);
+  left: max(4vw, 50px);
+  font-family: var(--font-family-en);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-text);
+  margin: 0;
+  pointer-events: auto;
+  /* For Hover scrambler */
+}
+
+.circle {
+  position: absolute;
+  top: max(4vw, 30px);
+  right: max(4vw, 50px);
+  width: clamp(100px, 12vw, 160px);
+  height: clamp(100px, 12vw, 160px);
+  pointer-events: none;
+}
+
+.rotate_left_inf {
+  animation: rotateLeft 15s linear infinite;
+}
+
+@keyframes rotateLeft {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.c-ttl__01 {
+  position: absolute;
+  top: 50%;
+  left: max(4vw, 50px);
+  transform: translateY(-50%);
+  margin: 0;
+  pointer-events: auto;
+}
+
+.c-ttl__01 .font-en {
+  display: block;
+  font-family: var(--font-family-en);
+  font-size: clamp(24px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-text);
+  margin-bottom: 10px;
+}
+
+.c-ttl__01 .jp-main {
+  display: block;
+  font-family: var(--font-family-base);
+  font-size: clamp(32px, 6vw, 85px);
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.sec-mv__tag {
+  position: absolute;
+  left: max(4vw, 50px);
+  bottom: clamp(120px, 15vw, 180px);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.sec-mv__tag-item {
+  margin-bottom: 5px;
+}
+
+.sec-mv__tag-item span {
+  display: inline-block;
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-family: var(--font-family-en);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  padding: 4px 15px;
+  transition: all 0.3s ease;
+}
+
+.sec-mv__tag-item span:hover {
+  background: #333;
+  color: #fff;
+}
+
+.sec-mv__copy {
+  position: absolute;
+  left: max(4vw, 50px);
+  bottom: max(4vw, 30px);
+  font-family: var(--font-family-en);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: #aaa;
+  margin: 0;
+  pointer-events: auto;
+}
+
+.sec-mv__btn {
+  pointer-events: auto !important;
+  position: absolute;
+  bottom: max(4vw, 30px);
+  right: max(4vw, 50px);
+  width: clamp(140px, 18vw, 240px);
+  height: clamp(140px, 18vw, 240px);
+  background: var(--color-text);
+  color: var(--color-bg);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.sec-mv__btn:hover {
+  transform: scale(1.05);
+  background: #ccc;
+}
+
+.sec-mv__btn .jp {
+  font-family: var(--font-family-base);
+  font-size: clamp(13px, 1.5vw, 22px);
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.sec-mv__btn .en {
+  font-family: var(--font-family-en);
+  font-size: clamp(10px, 1vw, 14px);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+/* ==========================================================
+   Lower Section Reset 
+   ========================================================== */
+.section.container {
+  padding: 120px max(4vw, 50px);
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-family: var(--font-family-en);
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #ccc;
+  margin-bottom: 50px;
+}
+
+.lead-text {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 700;
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+
+.text {
+  font-size: 15px;
+  line-height: 2;
+  color: #aaa;
+}
+
+.footer {
+  background: #000;
+  border-top: 1px solid #333;
+  padding: 50px max(4vw, 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-logo {
+  font-family: var(--font-family-en);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.footer-nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-nav a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.footer-copy {
+  font-family: var(--font-family-en);
+  font-size: 12px;
+  font-weight: 500;
+  margin: 0;
+  color: #666;
+}

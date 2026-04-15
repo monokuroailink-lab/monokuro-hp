@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERVICES | モノクロ。</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page-heading {
+            padding: 200px max(4vw, 50px) 100px;
+            border-bottom: 1px solid #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .page-heading h1 {
+            font-family: var(--font-family-en);
+            font-size: clamp(40px, 8vw, 80px);
+            margin: 0 0 10px 0;
+            color: #fff;
+            letter-spacing: 0.05em;
+        }
+
+        .page-heading p {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            color: #aaa;
+            margin: 0;
+        }
+
+        .subpage-main {
+            position: relative;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .subpage-main * {
+            pointer-events: auto;
+        }
+
+        .service-item {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 60px;
+            margin-bottom: 100px;
+            align-items: center;
+        }
+
+        .service-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .service-img {
+            flex: 1 1 400px;
+            background-color: #111;
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+        }
+
+        .service-text {
+            flex: 1 1 350px;
+        }
+
+        .service-num {
+            font-size: 24px;
+            color: #555;
+            font-weight: 300;
+            display: block;
+            margin-bottom: 10px;
+            font-family: var(--font-family-en);
+        }
+
+        .service-title {
+            font-size: 40px;
+            margin: 0 0 20px 0;
+            font-weight: 700;
+            font-family: var(--font-family-en);
+            color: #fff;
+        }
+
+        .service-desc {
+            font-size: 15px;
+            color: #aaa;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .service-list {
+            padding-left: 20px;
+            color: #fff;
+        }
+
+        .service-list li {
+            margin-bottom: 10px;
+            position: relative;
+            list-style: none;
+            font-size: 14px;
+        }
+
+        .service-list li::before {
+            content: '-';
+            position: absolute;
+            left: -15px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body class="colors-dark">
+    <div class="noise-overlay"></div>
+    <header class="header">
+        <a href="index.html" class="header-logo js-crackin-text" data-chaffle="en">MONOKURO INC.</a>
+        <nav class="header-nav font-en">
+            <ul>
+                <li><a href="about.html" class="js-crackin-text" data-chaffle="en">About</a></li>
+                <li><a href="services.html" class="js-crackin-text" data-chaffle="en" style="color: #aaa;">Services</a>
+                </li>
+                <li><a href="works.html" class="js-crackin-text" data-chaffle="en">Works</a></li>
+                <li><a href="contact.html" class="js-crackin-text" data-chaffle="en">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="subpage-main">
+        <section class="sec-mv">
+            <div class="inner">
+                <p class="supportText js-crackin-text" data-chaffle="en">URAKATA DESIGN FIRM</p>
+
+                <div class="circle rotate_left_inf">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%">
+                        <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"
+                            fill="transparent" />
+                        <text fill="#ffffff" font-family="'Oswald', sans-serif" font-weight="700">
+                            <textPath href="#circlePath" font-size="11.5" letter-spacing="3.2">DESIGNING THE INVISIBLE .
+                            </textPath>
+                        </text>
+                    </svg>
+                </div>
+
+                <h1 class="c-ttl__01">
+                    <span class="font-en js-crackin-text" data-chaffle="en">SERVICES_</span>
+                    <span class="jp-main">
+                        <span class="js-crackin-text" data-chaffle="ja">事業内容</span>
+                    </span>
+                </h1>
+
+                <ul class="sec-mv__tag">
+                    <li class="sec-mv__tag-item"><span class="js-crackin-text" data-chaffle="en">WEB / UI</span></li>
+                    <li class="sec-mv__tag-item"><span class="js-crackin-text" data-chaffle="en">STRATEGY</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="section container">
+            <div class="service-item">
+                <div class="service-img"><img src="images/service-web.jpg" alt="Web & UI Design" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                <div class="service-text">
+                    <span class="service-num js-crackin-text" data-chaffle="en" style="letter-spacing:0.1em;">01</span>
+                    <h2 class="service-title js-crackin-text" data-chaffle="en">Web & UI Design</h2>
+                    <p class="service-desc">
+                        企業の目的に合わせた、洗練されたWebサイトやアプリケーションのUI設計・デザインを提供します。見た目の美しさだけでなく、ユーザー体験（UX）を最適化し、KPI達成に繋げます。</p>
+                    <ul class="service-list">
+                        <li class="js-crackin-text" data-chaffle="ja">コーポレートサイト制作</li>
+                        <li class="js-crackin-text" data-chaffle="ja">ランディングページ（LP）制作</li>
+                        <li class="js-crackin-text" data-chaffle="ja">UI/UXデザイン設計</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="service-item">
+                <div class="service-img"><img src="images/service-branding.jpg" alt="Branding Strategy" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                <div class="service-text">
+                    <span class="service-num js-crackin-text" data-chaffle="en" style="letter-spacing:0.1em;">02</span>
+                    <h2 class="service-title js-crackin-text" data-chaffle="en">Branding Strategy</h2>
+                    <p class="service-desc">
+                        企業の独自の価値（USP）を見出し、一貫したブランド体験を構築します。ロゴデザインからコンセプトメイキング、コピーライティングまでトータルでサポートします。</p>
+                    <ul class="service-list">
+                        <li class="js-crackin-text" data-chaffle="ja">コンセプト設計・言語化</li>
+                        <li class="js-crackin-text" data-chaffle="ja">ロゴ・CI/VI開発</li>
+                        <li class="js-crackin-text" data-chaffle="ja">各種ブランドツール制作</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="service-item">
+                <div class="service-img"><img src="images/service-marketing.jpg" alt="Digital Marketing" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                <div class="service-text">
+                    <span class="service-num js-crackin-text" data-chaffle="en" style="letter-spacing:0.1em;">03</span>
+                    <h2 class="service-title js-crackin-text" data-chaffle="en">Digital Marketing</h2>
+                    <p class="service-desc">作った後のフェーズまで伴走します。データに基づいた確実な戦略立案と運用により、クライアントのビジネス成長を加速させます。</p>
+                    <ul class="service-list">
+                        <li class="js-crackin-text" data-chaffle="ja">広告クリエイティブ制作</li>
+                        <li class="js-crackin-text" data-chaffle="ja">SNS運用・戦略設計</li>
+                        <li class="js-crackin-text" data-chaffle="ja">データ分析・改善提案</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-logo js-crackin-text" data-chaffle="en">MONOKURO INC.</div>
+        <nav class="footer-nav">
+            <ul>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="works.html">Works</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <p class="footer-copy js-crackin-text" data-chaffle="en">&copy; 2026 MONOKURO INC. All Rights Reserved.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>
