@@ -635,6 +635,235 @@
             border-color: rgba(0,0,0,0.1);
         }
         
+        /* Header Styles (Refined fixed nav) */
+        .site-header {
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            z-index: 1300; /* Keep header above overlay to show logo/hamburger */
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            font-family: 'Orbitron', sans-serif;
+        }
+        .site-header.is-scrolled {
+            height: 70px;
+            background: rgba(248, 248, 248, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .mode-ura .site-header.is-scrolled {
+            background: rgba(0, 0, 0, 0.85);
+            border-bottom-color: rgba(255,255,255,0.05);
+        }
+        
+        .header-logo img {
+            height: 54px;
+            width: auto;
+            display: block;
+            transition: all 0.4s ease;
+        }
+        .mode-ura .header-logo img { filter: invert(1); }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            margin-left: auto; /* Push nav to the right */
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        body.menu-open .header-nav {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .header-nav__link {
+            text-decoration: none;
+            color: rgba(0,0,0,0.6);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .mode-ura .header-nav__link { color: rgba(255,255,255,0.6); }
+        .header-nav__link:hover { color: #000; }
+        .mode-ura .header-nav__link:hover { color: #fff; }
+        
+        .header-nav__link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #0066ff;
+            transition: width 0.3s ease;
+        }
+        .mode-ura .header-nav__link::after { background: #ff007f; }
+        .header-nav__link:hover::after { width: 100%; }
+
+        .header-btn {
+            background: #000;
+            color: #fff;
+            padding: 10px 24px;
+            font-size: 12px;
+            font-weight: 800;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-left: 15px;
+        }
+        .mode-ura .header-btn {
+            background: #ff007f;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
+        }
+        .header-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.8;
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 10px;
+            margin-left: 15px;
+            transition: all 0.4s ease;
+        }
+        .hamburger span {
+            width: 32px;
+            height: 1px;
+            background: #000;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .mode-ura .hamburger span { background: #fff; }
+
+        /* Full Overlay for Global Menu */
+        .global-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(248, 248, 248, 0.98);
+            backdrop-filter: blur(25px);
+            z-index: 1200; /* Higher than header for full cover */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5%;
+            transform: translateX(100%);
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .mode-ura .global-overlay { background: rgba(0, 0, 0, 0.98); }
+        .global-overlay.is-active { transform: translateX(0); }
+        
+        .overlay-inner {
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 80px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s 0.3s ease;
+        }
+        .global-overlay.is-active .overlay-inner {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .overlay-nav {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; /* Right align the group */
+            gap: 15px;
+            text-align: right;
+        }
+        .overlay-nav__item {
+            text-decoration: none;
+            color: #000;
+            font-size: clamp(32px, 5vw, 64px);
+            font-weight: 900;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            flex-direction: row-reverse; /* Put number on the right */
+            align-items: baseline;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+        .mode-ura .overlay-nav__item { color: #fff; }
+        .overlay-nav__item span {
+            font-size: 14px;
+            font-family: 'Space Grotesk', sans-serif;
+            color: rgba(0,0,0,0.3);
+            min-width: 25px;
+        }
+        .mode-ura .overlay-nav__item span { color: rgba(255,255,255,0.3); }
+        
+        .overlay-nav__item:hover {
+            transform: translateX(-20px); /* Slide to the left instead of right */
+            color: #0066ff;
+        }
+        .mode-ura .overlay-nav__item:hover { color: #ff007f; }
+
+        .overlay-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 50px;
+            border-left: 1px solid rgba(0,0,0,0.1);
+            padding-left: 60px;
+            text-align: left; /* Keep info left-aligned for hierarchy */
+        }
+        .mode-ura .overlay-info { border-left-color: rgba(255,255,255,0.1); }
+
+        .info-group h4 {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: rgba(0,0,0,0.4);
+        }
+        .mode-ura .info-group h4 { color: rgba(255,255,255,0.4); }
+        .info-group p {
+            font-size: 14px;
+            line-height: 1.8;
+            margin: 0;
+        }
+        .info-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .info-links a {
+            text-decoration: none;
+            color: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            transition: opacity 0.3s;
+        }
+        .info-links a:hover { opacity: 0.6; }
+
+        /* Media Queries for Header & Overlay */
+        @media (max-width: 1024px) {
+            .header-nav { display: none; }
+            .site-header { height: 70px; }
+            .overlay-inner { 
+                grid-template-columns: 1fr;
+                gap: 50px;
+                padding-top: 80px;
+                overflow-y: auto;
+                max-height: 90vh;
+            }
+            .overlay-info { border-left: none; padding-left: 0; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 40px; }
+        }
+
         @media (max-width: 1024px) {
             .footer-container { flex-direction: column; gap: 60px; }
             .footer-left, .footer-right { width: 100%; }
@@ -649,6 +878,60 @@
 </head>
 <body class="mode-omote">
     <div id="flash"></div>
+
+    <header class="site-header">
+        <a href="#" class="header-logo">
+            <img src="assets/images/logo.png" alt="モノクロ。">
+        </a>
+        
+        <nav class="header-nav">
+            <a href="#works" class="header-nav__link">WORKS</a>
+            <a href="#service" class="header-nav__link">SERVICE</a>
+            <a href="#about" class="header-nav__link">ABOUT</a>
+            <a href="#recruit" class="header-nav__link">RECRUIT</a>
+            <a href="#contact" class="header-btn">CONTACT</a>
+        </nav>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <div class="global-overlay">
+        <div class="overlay-inner">
+            <nav class="overlay-nav">
+                <a href="#works" class="overlay-nav__item" onclick="toggleMenu()"><span>01</span>WORKS</a>
+                <a href="#service" class="overlay-nav__item" onclick="toggleMenu()"><span>02</span>SERVICE</a>
+                <a href="#about" class="overlay-nav__item" onclick="toggleMenu()"><span>03</span>ABOUT</a>
+                <a href="#recruit" class="overlay-nav__item" onclick="toggleMenu()"><span>04</span>RECRUIT</a>
+                <a href="#contact" class="overlay-nav__item" onclick="toggleMenu()"><span>05</span>CONTACT</a>
+            </nav>
+            
+            <div class="overlay-info">
+                <div class="info-group">
+                    <h4>LOCATION</h4>
+                    <p>〒578-0931<br>大阪府東大阪市花園東町1丁目17-30</p>
+                </div>
+                <div class="info-group">
+                    <h4>SOCIAL</h4>
+                    <div class="info-links">
+                        <a href="#">X (TWITTER) ↗</a>
+                        <a href="https://www.instagram.com/monokuro_creative/?hl=ja" target="_blank" rel="noopener">INSTAGRAM ↗</a>
+                        <a href="#">FACEBOOK ↗</a>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <h4>PAGES</h4>
+                    <div class="info-links">
+                        <a href="#">PRIVACY POLICY</a>
+                        <a href="#">SITEMAP</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="fv-container">
         <div class="click-area" onclick="handleTap()"></div>
         <!-- Glitch Layers -->
@@ -662,6 +945,7 @@
     <section class="logo-carousel">
         <div class="logo-track">
             <!-- First set of logos (Arbitrary curated brands) -->
+            <div class="logo-item"><img src="assets/images/logo_client_new.svg" alt="New Client"></div>
             <div class="logo-item">ADOBE</div>
             <div class="logo-item">FIGMA</div>
             <div class="logo-item">STRIPE</div>
@@ -672,6 +956,7 @@
             <div class="logo-item">APPLE</div>
             <div class="logo-item">SONY</div>
             <!-- Duplicate for seamless loop -->
+            <div class="logo-item"><img src="assets/images/logo_client_new.svg" alt="New Client"></div>
             <div class="logo-item">ADOBE</div>
             <div class="logo-item">FIGMA</div>
             <div class="logo-item">STRIPE</div>
@@ -870,6 +1155,7 @@
             <!-- Left CV & Logo -->
             <div class="footer-left">
                 <a href="#" class="footer-brand-logo">MONOKURO INC.</a>
+                <p style="font-size: 11px; color: rgba(0,0,0,0.5); margin: 5px 0 25px 0;">〒578-0931 大阪府東大阪市花園東町1丁目17-30</p>
                 
                 <div class="footer-cv-area">
                     <a href="#" class="cv-link">
@@ -1006,6 +1292,14 @@
                 container.style.backgroundImage = isUra ? 'var(--img-ura)' : 'var(--img-omote)';
                 document.body.style.background = isUra ? '#000' : '#f8f8f8';
                 
+                // Update header background if scrolled
+                const header = document.querySelector('.site-header');
+                if(!isUra) {
+                    header.style.background = window.scrollY > 50 ? 'rgba(248, 248, 248, 0.85)' : 'transparent';
+                } else {
+                    header.style.background = window.scrollY > 50 ? 'rgba(0, 0, 0, 0.85)' : 'transparent';
+                }
+
                 // Toggle mode classes for logo colors
                 if(isUra) {
                     document.body.classList.remove('mode-omote');
@@ -1028,6 +1322,49 @@
             if (taps === 3) { toggle(); taps = 0; }
             else { timer = setTimeout(() => taps = 0, 500); }
         }
+
+        // Header scroll behavior
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.site-header');
+            if (window.scrollY > 50) {
+                header.classList.add('is-scrolled');
+            } else {
+                header.classList.remove('is-scrolled');
+            }
+        });
+
+        // Global menu toggle
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const overlay = document.querySelector('.global-overlay');
+            const spans = hamburger.querySelectorAll('span');
+            
+            overlay.classList.toggle('is-active');
+            document.body.classList.toggle('menu-open');
+            
+            if (overlay.classList.contains('is-active')) {
+                spans[0].style.transform = 'translateY(5.5px) rotate(45deg)';
+                spans[1].style.transform = 'translateY(-5.5px) rotate(-45deg)';
+                document.body.style.overflow = 'hidden';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.transform = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
         const code = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
         let idx = 0;
