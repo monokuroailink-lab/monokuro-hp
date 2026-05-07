@@ -1225,13 +1225,19 @@
         .mode-ura .map-placeholder { color: rgba(255,255,255,0.1); background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); }
 
         .company-brand-name {
-            font-size: 48px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            letter-spacing: 0.05em;
-            margin-bottom: 10px;
+            margin: 0 0 10px;
             line-height: 1;
         }
+        .company-brand-name img {
+            display: block;
+            height: 88px;
+            width: auto;
+        }
+        @media (max-width: 768px) {
+            .company-brand-name img { height: 64px; }
+        }
+        /* ダークモード: 黒ロゴを白に反転 */
+        .mode-ura .company-brand-name img { filter: invert(1); }
         .company-legal-name {
             font-size: 16px;
             color: rgba(255,255,255,0.8);
@@ -1911,8 +1917,8 @@
 
             <!-- Right: Details Area -->
             <div class="company-details">
-                <h3 class="company-brand-name">MONOKURO.</h3>
-                <p class="company-legal-name">株式会社モノクロ (MONOKURO Inc.)</p>
+                <h3 class="company-brand-name"><img src="images/モノクロロゴ横.png" alt="モノクロ。" /></h3>
+                <p class="company-legal-name">モノクロ。</p>
                 
                 <ul class="company-details-list">
                     <li class="company-details-item">
@@ -2022,7 +2028,7 @@
                 <a href="#">特定商取引法</a>
                 <a href="#">サイトマップ</a>
             </div>
-            <p class="bottom-copyright">&copy; 2026 MONOKURO Inc. ALL RIGHTS RESERVED.</p>
+            <p class="bottom-copyright">&copy; 2026 モノクロ。 ALL RIGHTS RESERVED.</p>
         </div>
     </footer>
 
