@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BRIEF_SHEET // MONOKURO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06070b;
+    --bg-1: #0c0d14;
+    --bg-2: #14151f;
+    --border: #1d1f2c;
+    --border-2: #2a2d3f;
+    --text: #d8dae6;
+    --text-dim: #6a6d80;
+    --text-mute: #44475a;
+    --cyan: #00f0ff;
+    --cyan-glow: rgba(0, 240, 255, 0.4);
+    --magenta: #ff0080;
+    --magenta-glow: rgba(255, 0, 128, 0.4);
+    --green: #00ff9d;
+    --green-glow: rgba(0, 255, 157, 0.35);
+    --red: #ff3366;
+    --red-glow: rgba(255, 51, 102, 0.35);
+    --amber: #ffaa00;
+    --amber-glow: rgba(255, 170, 0, 0.3);
+    --font-display: 'Orbitron', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-jp: 'Noto Sans JP', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-jp);
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Scanlines */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(0, 240, 255, 0.018) 0px,
+      rgba(0, 240, 255, 0.018) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: screen;
+  }
+
+  /* Radial glow */
+  .ambient {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(circle at 10% 0%, rgba(0,240,255,0.08), transparent 40%),
+      radial-gradient(circle at 90% 100%, rgba(255,0,128,0.06), transparent 40%);
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* HEADER */
+  .hud-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: linear-gradient(180deg, rgba(6,7,11,0.96) 0%, rgba(6,7,11,0.88) 100%);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 0 0;
+  }
+
+  .hud-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    padding-bottom: 14px;
+    flex-wrap: wrap;
+  }
+
+  .hud-title-block { display: flex; flex-direction: column; gap: 4px; }
+
+  .hud-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--cyan);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hud-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--cyan);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hud-title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(22px, 3.5vw, 34px);
+    letter-spacing: 0.05em;
+    color: var(--text);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .hud-title .accent { color: var(--cyan); }
+  .hud-title .slash { color: var(--magenta); margin: 0 6px; }
+
+  .hud-sub {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .hud-stats {
+    display: flex;
+    gap: 24px;
+    align-items: flex-end;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: right;
+    min-width: 90px;
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--cyan);
+    text-shadow: 0 0 12px var(--cyan-glow);
+    line-height: 1;
+  }
+
+  .stat-value.magenta { color: var(--magenta); text-shadow: 0 0 12px var(--magenta-glow); }
+
+  /* Progress bar */
+  .progress-track {
+    height: 4px;
+    background: var(--bg-2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-track::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 39px,
+      rgba(255,255,255,0.05) 39px,
+      rgba(255,255,255,0.05) 40px
+    );
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta));
+    box-shadow: 0 0 12px var(--cyan-glow);
+    transition: width 0.3s ease;
+  }
+
+  /* SECTION NAV */
+  .section-nav {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-2) transparent;
+  }
+
+  .section-nav::-webkit-scrollbar { height: 4px; }
+  .section-nav::-webkit-scrollbar-thumb { background: var(--border-2); }
+
+  .nav-pill {
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 8px 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .nav-pill:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    background: rgba(0,240,255,0.05);
+  }
+
+  .nav-pill.complete {
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .nav-pill .pill-id {
+    font-weight: 700;
+    color: var(--text);
+    opacity: 0.7;
+  }
+
+  .nav-pill.complete .pill-id { color: var(--green); opacity: 1; }
+  .nav-pill:hover .pill-id { color: var(--cyan); opacity: 1; }
+
+  .nav-pill .pill-progress {
+    font-size: 9px;
+    opacity: 0.6;
+  }
+
+  /* MAIN */
+  main {
+    padding: 40px 0 120px;
+  }
+
+  .section-block {
+    margin-bottom: 56px;
+    scroll-margin-top: 180px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-id {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 14px;
+    color: var(--magenta);
+    background: rgba(255,0,128,0.08);
+    border: 1px solid var(--magenta);
+    padding: 6px 12px;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 8px var(--magenta-glow);
+    clip-path: polygon(0 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+    padding-right: 18px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .section-title-jp {
+    font-family: var(--font-jp);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-left: auto;
+    letter-spacing: 0.1em;
+  }
+
+  /* QUESTION */
+  .question {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    margin-bottom: 10px;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 16px;
+    align-items: center;
+    transition: border-color 0.15s ease;
+    position: relative;
+  }
+
+  .question:hover { border-color: var(--border-2); }
+
+  .question.answered { border-left: 2px solid var(--green); }
+  .question.tentative { border-left: 2px solid var(--amber); }
+  .question.tentative.answered { border-left: 2px solid var(--green); }
+
+  .q-id {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  .q-id::before { content: 'Q.'; color: var(--text-mute); }
+
+  .q-text {
+    font-family: var(--font-jp);
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .tentative-badge {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--amber);
+    background: rgba(255,170,0,0.1);
+    border: 1px solid var(--amber);
+    padding: 2px 6px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .question.answered .tentative-badge { display: none; }
+
+  /* TOGGLE */
+  .toggle-group {
+    display: flex;
+    gap: 6px;
+  }
+
+  .toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border-2);
+    color: var(--text-dim);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    padding: 8px 18px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    min-width: 64px;
+    clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+  }
+
+  .toggle-btn:hover {
+    border-color: var(--text);
+    color: var(--text);
+  }
+
+  .toggle-btn.active-yes {
+    background: rgba(0,255,157,0.1);
+    border-color: var(--green);
+    color: var(--green);
+    text-shadow: 0 0 8px var(--green-glow);
+    box-shadow: inset 0 0 12px rgba(0,255,157,0.1), 0 0 12px var(--green-glow);
+  }
+
+  .toggle-btn.active-no {
+    background: rgba(255,51,102,0.1);
+    border-color: var(--red);
+    color: var(--red);
+    text-shadow: 0 0 8px var(--red-glow);
+    box-shadow: inset 0 0 12px rgba(255,51,102,0.1), 0 0 12px var(--red-glow);
+  }
+
+  /* TEXT INPUT QUESTION */
+  .question.input-q {
+    grid-template-columns: 60px 1fr;
+    align-items: start;
+  }
+
+  .input-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .input-field, .input-area {
+    background: var(--bg);
+    border: 1px solid var(--border-2);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 10px 14px;
+    width: 100%;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    border-left: 2px solid var(--cyan);
+  }
+
+  .input-field {
+    font-family: var(--font-jp);
+  }
+
+  .input-area {
+    font-family: var(--font-jp);
+    min-height: 70px;
+    resize: vertical;
+  }
+
+  .input-field:focus, .input-area:focus {
+    outline: none;
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 1px var(--cyan), 0 0 16px var(--cyan-glow);
+  }
+
+  .input-field::placeholder, .input-area::placeholder {
+    color: var(--text-mute);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  /* ACTION BAR */
+  .action-bar {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+  }
+
+  .btn {
+    background: var(--bg-1);
+    border: 1px solid var(--border-2);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 12px 18px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(6px);
+    background: rgba(12,13,20,0.9);
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .btn:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    box-shadow: 0 0 14px var(--cyan-glow);
+  }
+
+  .btn-primary {
+    border-color: var(--cyan);
+    color: var(--cyan);
+  }
+
+  .btn-danger:hover {
+    border-color: var(--red);
+    color: var(--red);
+    box-shadow: 0 0 14px var(--red-glow);
+  }
+
+  .btn::before { content: '▸'; opacity: 0.7; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-80px);
+    background: var(--bg-1);
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 10px 20px;
+    letter-spacing: 0.1em;
+    box-shadow: 0 0 20px var(--cyan-glow);
+    z-index: 100;
+    transition: transform 0.3s ease;
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* FOOTER */
+  .form-footer {
+    margin-top: 80px;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-mute);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 720px) {
+    .question {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .question.input-q { grid-template-columns: 1fr; }
+    .q-id { font-size: 10px; }
+    .toggle-group { justify-content: flex-start; }
+    .hud-stats { gap: 16px; }
+    .stat { min-width: 70px; }
+    .stat-value { font-size: 16px; }
+    .section-title { font-size: 16px; }
+    .section-title-jp { display: none; }
+    .action-bar { bottom: 12px; right: 12px; }
+    .btn { font-size: 10px; padding: 10px 14px; }
+  }
+
+  /* corner deco */
+  .corner-deco {
+    position: fixed;
+    width: 24px; height: 24px;
+    border-color: var(--cyan);
+    z-index: 5;
+    pointer-events: none;
+  }
+  .corner-deco.tl { top: 12px; left: 12px; border-top: 2px solid; border-left: 2px solid; }
+  .corner-deco.tr { top: 12px; right: 12px; border-top: 2px solid; border-right: 2px solid; }
+  .corner-deco.bl { bottom: 12px; left: 12px; border-bottom: 2px solid; border-left: 2px solid; }
+  .corner-deco.br { bottom: 12px; right: 12px; border-bottom: 2px solid; border-right: 2px solid; }
+</style>
+</head>
+<body>
+  <div class="ambient"></div>
+  <div class="corner-deco tl"></div>
+  <div class="corner-deco tr"></div>
+  <div class="corner-deco bl"></div>
+  <div class="corner-deco br"></div>
+
+  <header class="hud-header">
+    <div class="container">
+      <div class="hud-top">
+        <div class="hud-title-block">
+          <span class="hud-tag">// SYSTEM ONLINE</span>
+          <h1 class="hud-title">MONOKURO<span class="slash">//</span><span class="accent">BRIEF_SHEET</span></h1>
+          <span class="hud-sub">HP CONTENT INTAKE FORM &nbsp;&middot;&nbsp; v1.0</span>
+        </div>
+        <div class="hud-stats">
+          <div class="stat">
+            <span class="stat-label">PROGRESS</span>
+            <span class="stat-value" id="progress-percent">0%</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">ANSWERED</span>
+            <span class="stat-value magenta" id="progress-count">0/0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="container">
+      <nav class="section-nav" id="section-nav"></nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container" id="form-container"></div>
+    <div class="container">
+      <div class="form-footer">
+        // END_OF_BRIEF &nbsp;&middot;&nbsp; MONOKURO INC.
+      </div>
+    </div>
+  </main>
+
+  <div class="action-bar">
+    <button class="btn btn-primary" id="btn-export-md">EXPORT.MD</button>
+    <button class="btn" id="btn-export-json">EXPORT.JSON</button>
+    <button class="btn btn-danger" id="btn-reset">RESET</button>
+  </div>
+
+  <div class="toast" id="toast">SAVED</div>
+
+<script>
+const SECTIONS = [
+  {
+    id: '01', code: 'CORE', title: 'CORE_BUSINESS', titleJp: '事業の核',
+    questions: [
+      { id: '1-1', type: 'yesno', text: 'BtoB（法人向け）が中心である', tentative: 'yes' },
+      { id: '1-2', type: 'yesno', text: 'BtoC（個人向け）も対応する', tentative: 'no' },
+      { id: '1-3', type: 'yesno', text: '「クリエイティブ／デザインファーム」と名乗ってよい', tentative: 'yes' },
+      { id: '1-4', type: 'yesno', text: '「制作会社」と名乗りたい' },
+      { id: '1-5', type: 'yesno', text: '「ブランディング会社」と名乗りたい' },
+      { id: '1-6', type: 'yesno', text: '「マーケティング支援会社」と名乗りたい' },
+      { id: '1-7', type: 'textarea', text: '一言で言うと何屋？（自由記入）', placeholder: '例：BtoBの事業をデザインで翻訳するチーム' },
+      { id: '1-8', type: 'textarea', text: 'やらない仕事を一言で', placeholder: '例：単発のロゴ制作のみは受けない / 値切り前提の案件はNG' },
+    ]
+  },
+  {
+    id: '02', code: 'TARGET', title: 'TARGET', titleJp: 'ターゲット',
+    questions: [
+      { id: '2-1', type: 'yesno', text: '中小企業（〜100名規模）が主な対象' },
+      { id: '2-2', type: 'yesno', text: 'スタートアップ・新規事業も対象' },
+      { id: '2-3', type: 'yesno', text: '大手企業も対象' },
+      { id: '2-4', type: 'yesno', text: '個人事業主・フリーランスも対象' },
+      { id: '2-5', type: 'yesno', text: '関西エリア中心' },
+      { id: '2-6', type: 'yesno', text: '全国対応' },
+      { id: '2-7', type: 'yesno', text: '主な決裁者は経営者／役員' },
+      { id: '2-8', type: 'yesno', text: '主な決裁者はマーケ／広報担当' },
+      { id: '2-9', type: 'input', text: '想定する最低取引単価', placeholder: '例：50万円〜' },
+    ]
+  },
+  {
+    id: '03', code: 'SERVICE', title: 'SERVICES', titleJp: 'サービス',
+    questions: [
+      { id: '3-1', type: 'yesno', text: '現行3本立て（Web/Branding/Marketing）で合っている', tentative: 'yes' },
+      { id: '3-2', type: 'yesno', text: 'Web & UI Design：HP制作を含む', tentative: 'yes' },
+      { id: '3-3', type: 'yesno', text: 'Web & UI Design：LP制作を含む', tentative: 'yes' },
+      { id: '3-4', type: 'yesno', text: 'Web & UI Design：UI/UX設計を含む', tentative: 'yes' },
+      { id: '3-5', type: 'yesno', text: 'Web & UI Design：アプリUIも対応' },
+      { id: '3-6', type: 'yesno', text: 'Branding Strategy：ロゴ制作を含む', tentative: 'yes' },
+      { id: '3-7', type: 'yesno', text: 'Branding Strategy：CI/VI設計を含む', tentative: 'yes' },
+      { id: '3-8', type: 'yesno', text: 'Branding Strategy：ネーミング・コピー開発を含む' },
+      { id: '3-9', type: 'yesno', text: 'Digital Marketing：広告運用を含む', tentative: 'yes' },
+      { id: '3-10', type: 'yesno', text: 'Digital Marketing：SNS運用代行を含む', tentative: 'yes' },
+      { id: '3-11', type: 'yesno', text: 'Digital Marketing：データ分析・改善を含む', tentative: 'yes' },
+      { id: '3-12', type: 'yesno', text: '月額・顧問契約での伴走支援も提供する' },
+      { id: '3-13', type: 'yesno', text: '撮影・動画制作も対応する' },
+      { id: '3-14', type: 'yesno', text: '印刷物（パンフ・名刺等）も対応する' },
+      { id: '3-15', type: 'yesno', text: '価格をHPに表示する' },
+      { id: '3-16', type: 'textarea', text: '入口になりやすい商品（フロント商品）', placeholder: '例：HP制作、ブランディング診断 など' },
+    ]
+  },
+  {
+    id: '04', code: 'EDGE', title: 'STRENGTH', titleJp: '強み・差別化',
+    questions: [
+      { id: '4-1', type: 'yesno', text: '理念「想いを、伝わるかたちに。」を表に出す', tentative: 'yes' },
+      { id: '4-2', type: 'yesno', text: '理念「自分は白、顧客は色。」を表に出す', tentative: 'yes' },
+      { id: '4-3', type: 'yesno', text: '「ウラカタの美学」5箇条をABOUTに載せる', tentative: 'yes' },
+      { id: '4-4', type: 'yesno', text: '"URAKATA DESIGN FIRM" の英語表記を継続使用', tentative: 'yes' },
+      { id: '4-5', type: 'yesno', text: '「現場と戦略の二刀流」を強みとして打ち出す', tentative: 'yes' },
+      { id: '4-6', type: 'yesno', text: '数値で語れる実績がある（継続率・改善率など）' },
+      { id: '4-7', type: 'yesno', text: '受賞歴・メディア掲載歴がある' },
+      { id: '4-8', type: 'yesno', text: '既存クライアントの推薦コメントを掲載できる' },
+      { id: '4-9', type: 'textarea', text: '競合・比較対象に挙がる会社／タイプ', placeholder: '例：株式会社○○、フリーランス系のWeb制作 など' },
+    ]
+  },
+  {
+    id: '05', code: 'WORKS', title: 'PORTFOLIO', titleJp: '実績（WORKS）',
+    questions: [
+      { id: '5-1', type: 'yesno', text: '公開可能な実績が3件以上ある' },
+      { id: '5-2', type: 'yesno', text: '公開可能な実績が10件以上ある' },
+      { id: '5-3', type: 'yesno', text: 'カテゴリで絞り込ませる（Web/Branding等）', tentative: 'yes' },
+      { id: '5-4', type: 'yesno', text: '各案件で「課題→施策→成果」を語れる' },
+      { id: '5-5', type: 'yesno', text: '匿名で載せたい案件がある' },
+      { id: '5-6', type: 'yesno', text: 'クライアントロゴを並べるセクションを置く' },
+    ]
+  },
+  {
+    id: '06', code: 'TEAM', title: 'MEMBERS', titleJp: 'メンバー',
+    questions: [
+      { id: '6-1', type: 'yesno', text: 'メンバーを実名で公開する' },
+      { id: '6-2', type: 'yesno', text: '顔写真を公開する' },
+      { id: '6-3', type: 'yesno', text: 'イラスト／シルエットで代用する' },
+      { id: '6-4', type: 'yesno', text: '各メンバーの役割・強みを載せる', tentative: 'yes' },
+      { id: '6-5', type: 'yesno', text: '代表メッセージを掲載する', tentative: 'yes' },
+      { id: '6-6', type: 'input', text: 'メンバー人数', placeholder: '例：3名' },
+      { id: '6-7', type: 'yesno', text: 'チーム名「モノクロ。」の由来を載せる' },
+    ]
+  },
+  {
+    id: '07', code: 'TONE', title: 'TONE_VOICE', titleJp: 'トーン＆ボイス',
+    questions: [
+      { id: '7-1', type: 'yesno', text: '一人称は「私たち」' },
+      { id: '7-2', type: 'yesno', text: '一人称は「モノクロは」' },
+      { id: '7-3', type: 'yesno', text: '関西弁・口語を混ぜたい' },
+      { id: '7-4', type: 'yesno', text: '英語タイポグラフィを多用する（現状路線）', tentative: 'yes' },
+      { id: '7-5', type: 'yesno', text: 'ダークテーマ（黒基調）を継続', tentative: 'yes' },
+      { id: '7-6', type: 'yesno', text: '文体は断定的・力強い' },
+      { id: '7-7', type: 'yesno', text: '文体は柔らかく寄り添う' },
+      { id: '7-8', type: 'textarea', text: '避けたい言葉・表現', placeholder: '例：「クリエイティブ」「ソリューション」を多用しない' },
+    ]
+  },
+  {
+    id: '08', code: 'INFO', title: 'COMPANY_INFO', titleJp: '会社・チーム情報',
+    questions: [
+      { id: '8-1', type: 'yesno', text: '法人である' },
+      { id: '8-2', type: 'input', text: '正式名称', placeholder: '例：株式会社モノクロ' },
+      { id: '8-3', type: 'input', text: '設立年月', placeholder: '例：2024年4月' },
+      { id: '8-4', type: 'yesno', text: '所在地は番地まで公開' },
+      { id: '8-5', type: 'yesno', text: '所在地は市区町村まで' },
+      { id: '8-6', type: 'yesno', text: '代表者名を公開' },
+      { id: '8-7', type: 'input', text: '公開メールアドレス', placeholder: 'info@example.com' },
+      { id: '8-8', type: 'yesno', text: '電話番号を公開する' },
+      { id: '8-9', type: 'yesno', text: '適格請求書発行事業者である' },
+    ]
+  },
+  {
+    id: '09', code: 'CONTACT', title: 'CONTACT_FLOW', titleJp: 'お問い合わせ運用',
+    questions: [
+      { id: '9-1', type: 'yesno', text: 'フォームで予算感をヒアリングする' },
+      { id: '9-2', type: 'yesno', text: 'フォームで希望納期をヒアリングする' },
+      { id: '9-3', type: 'yesno', text: '参考サイトURLを入力させる' },
+      { id: '9-4', type: 'yesno', text: '初回相談は無料' },
+      { id: '9-5', type: 'yesno', text: '24時間以内の返信を約束する' },
+      { id: '9-6', type: 'yesno', text: '営業日2日以内の返信を約束する' },
+      { id: '9-7', type: 'yesno', text: '資料DL・事例集など別の入口も用意する' },
+    ]
+  },
+  {
+    id: '10', code: 'OPS', title: 'OPERATION', titleJp: '公開・運用',
+    questions: [
+      { id: '10-1', type: 'yesno', text: 'NEWS（お知らせ）を毎月以上の頻度で更新できる' },
+      { id: '10-2', type: 'yesno', text: '更新が難しいならNEWSは載せない方向' },
+      { id: '10-3', type: 'yesno', text: 'WORKSを案件ごとに追加していく体制がある' },
+      { id: '10-4', type: 'yesno', text: 'ブログ／オウンドメディアを並走させる' },
+      { id: '10-5', type: 'yesno', text: 'SNS（X／Instagram等）と連携させる' },
+      { id: '10-6', type: 'yesno', text: '多言語対応（英語版）を作る' },
+      { id: '10-7', type: 'input', text: '公開希望時期', placeholder: '例：2026年6月頃' },
+    ]
+  },
+  {
+    id: '11', code: 'NOTES', title: 'FREE_NOTES', titleJp: '自由記述',
+    questions: [
+      { id: '11-1', type: 'textarea', text: '一番伝えたいこと', placeholder: 'HPを訪れた人にこれだけは持って帰ってほしい...' },
+      { id: '11-2', type: 'textarea', text: 'まだ迷っていること', placeholder: '決めきれてない論点を全部吐き出す欄' },
+      { id: '11-3', type: 'textarea', text: '参考にしたいサイト（Crackin / Pineal 以外で）', placeholder: 'URLや会社名 / 雰囲気の言語化でもOK' },
+    ]
+  },
+];
+
+const STORAGE_KEY = 'monokuro_brief_sheet_v1';
+let answers = loadAnswers();
+
+function loadAnswers() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) { return {}; }
+}
+
+function saveAnswers() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(answers)); } catch (e) {}
+}
+
+function isAnswered(q) {
+  const v = answers[q.id];
+  if (q.type === 'yesno') return v === 'yes' || v === 'no';
+  return typeof v === 'string' && v.trim().length > 0;
+}
+
+function totalQuestions() {
+  return SECTIONS.reduce((s, sec) => s + sec.questions.length, 0);
+}
+
+function answeredCount() {
+  let n = 0;
+  for (const sec of SECTIONS) for (const q of sec.questions) if (isAnswered(q)) n++;
+  return n;
+}
+
+function sectionAnswered(sec) {
+  let n = 0;
+  for (const q of sec.questions) if (isAnswered(q)) n++;
+  return n;
+}
+
+function renderNav() {
+  const nav = document.getElementById('section-nav');
+  nav.innerHTML = '';
+  SECTIONS.forEach(sec => {
+    const a = document.createElement('a');
+    a.href = `#sec-${sec.id}`;
+    a.className = 'nav-pill';
+    const done = sectionAnswered(sec);
+    const total = sec.questions.length;
+    if (done === total) a.classList.add('complete');
+    a.innerHTML = `<span class="pill-id">${sec.id}</span><span>${sec.code}</span><span class="pill-progress">[${done}/${total}]</span>`;
+    nav.appendChild(a);
+  });
+}
+
+function renderForm() {
+  const root = document.getElementById('form-container');
+  root.innerHTML = '';
+  SECTIONS.forEach(sec => {
+    const block = document.createElement('section');
+    block.className = 'section-block';
+    block.id = `sec-${sec.id}`;
+
+    const header = document.createElement('div');
+    header.className = 'section-header';
+    header.innerHTML = `
+      <span class="section-id">SEC.${sec.id}</span>
+      <h2 class="section-title">${sec.title}</h2>
+      <span class="section-title-jp">${sec.titleJp}</span>
+    `;
+    block.appendChild(header);
+
+    sec.questions.forEach(q => {
+      const card = document.createElement('div');
+      card.className = 'question';
+      card.dataset.qid = q.id;
+
+      if (q.type === 'yesno') {
+        if (q.tentative && answers[q.id] === undefined) {
+          answers[q.id] = q.tentative;
+        }
+        const current = answers[q.id];
+        if (current === 'yes' || current === 'no') card.classList.add('answered');
+        if (q.tentative) card.classList.add('tentative');
+
+        const tentBadge = q.tentative ? '<span class="tentative-badge">仮</span>' : '';
+
+        card.innerHTML = `
+          <div class="q-id">${q.id}</div>
+          <div class="q-text">${q.text}${tentBadge}</div>
+          <div class="toggle-group">
+            <button type="button" class="toggle-btn ${current === 'yes' ? 'active-yes' : ''}" data-val="yes">YES</button>
+            <button type="button" class="toggle-btn ${current === 'no' ? 'active-no' : ''}" data-val="no">NO</button>
+          </div>
+        `;
+
+        card.querySelectorAll('.toggle-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const val = btn.dataset.val;
+            answers[q.id] = val;
+            saveAnswers();
+            // toggle classes
+            card.querySelectorAll('.toggle-btn').forEach(b => {
+              b.classList.remove('active-yes', 'active-no');
+            });
+            btn.classList.add(val === 'yes' ? 'active-yes' : 'active-no');
+            card.classList.add('answered');
+            updateStats();
+            renderNav();
+          });
+        });
+      } else {
+        card.classList.add('input-q');
+        const val = answers[q.id] || '';
+        if (val.trim()) card.classList.add('answered');
+        const inputEl = q.type === 'textarea'
+          ? `<textarea class="input-area" placeholder="${q.placeholder || ''}">${escapeHtml(val)}</textarea>`
+          : `<input class="input-field" type="text" placeholder="${q.placeholder || ''}" value="${escapeHtml(val)}">`;
+        card.innerHTML = `
+          <div class="q-id">${q.id}</div>
+          <div class="input-block">
+            <div class="q-text">${q.text}</div>
+            ${inputEl}
+          </div>
+        `;
+        const el = card.querySelector('.input-field, .input-area');
+        el.addEventListener('input', () => {
+          answers[q.id] = el.value;
+          saveAnswers();
+          if (el.value.trim()) card.classList.add('answered');
+          else card.classList.remove('answered');
+          updateStats();
+          renderNav();
+        });
+      }
+      block.appendChild(card);
+    });
+
+    root.appendChild(block);
+  });
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function updateStats() {
+  const total = totalQuestions();
+  const ans = answeredCount();
+  const pct = total ? Math.round((ans / total) * 100) : 0;
+  document.getElementById('progress-percent').textContent = pct + '%';
+  document.getElementById('progress-count').textContent = `${ans}/${total}`;
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+function exportMarkdown() {
+  let out = `# モノクロ。HP ブリーフシート 回答\n\n`;
+  out += `> 生成日時: ${new Date().toLocaleString('ja-JP')}\n`;
+  out += `> 回答状況: ${answeredCount()} / ${totalQuestions()}\n\n---\n\n`;
+
+  SECTIONS.forEach(sec => {
+    out += `## ${sec.id}. ${sec.titleJp}（${sec.title}）\n\n`;
+    sec.questions.forEach(q => {
+      const v = answers[q.id];
+      if (q.type === 'yesno') {
+        const yesMark = v === 'yes' ? '☑' : '☐';
+        const noMark = v === 'no' ? '☑' : '☐';
+        const tent = q.tentative ? '' : '';
+        out += `- **${q.id}** ${q.text}${tent}\n  → ${yesMark} はい / ${noMark} いいえ\n`;
+      } else {
+        const text = (v && v.trim()) ? v.trim() : '（未記入）';
+        out += `- **${q.id}** ${q.text}\n  → ${text.replace(/\n/g, '\n     ')}\n`;
+      }
+    });
+    out += '\n';
+  });
+  download('monokuro_brief_answers.md', out, 'text/markdown');
+  showToast('// EXPORTED .md');
+}
+
+function exportJson() {
+  const data = {
+    meta: {
+      generatedAt: new Date().toISOString(),
+      answered: answeredCount(),
+      total: totalQuestions(),
+    },
+    answers,
+  };
+  download('monokuro_brief_answers.json', JSON.stringify(data, null, 2), 'application/json');
+  showToast('// EXPORTED .json');
+}
+
+function download(filename, content, mime) {
+  const blob = new Blob([content], { type: mime + ';charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+function reset() {
+  if (!confirm('すべての回答をリセットします。よろしいですか？')) return;
+  answers = {};
+  localStorage.removeItem(STORAGE_KEY);
+  renderForm();
+  renderNav();
+  updateStats();
+  showToast('// RESET COMPLETE');
+}
+
+// Init
+renderForm();
+renderNav();
+updateStats();
+
+document.getElementById('btn-export-md').addEventListener('click', exportMarkdown);
+document.getElementById('btn-export-json').addEventListener('click', exportJson);
+document.getElementById('btn-reset').addEventListener('click', reset);
+
+// Smooth scroll for nav
+document.getElementById('section-nav').addEventListener('click', (e) => {
+  const link = e.target.closest('.nav-pill');
+  if (!link) return;
+  e.preventDefault();
+  const target = document.querySelector(link.getAttribute('href'));
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+</script>
+</body>
+</html>

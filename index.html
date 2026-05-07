@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --img-omote: url('assets/images/fv-omote.png');
@@ -16,8 +17,6 @@
         body {
             font-family: 'Space Grotesk', "Noto Sans JP", sans-serif;
             color: #333;
-            user-select: none;
-            cursor: none; /* Custom cursor */
             letter-spacing: 0.08em; /* Tracking 80 */
             transition: background-color 0.4s ease, color 0.4s ease;
         }
@@ -467,8 +466,9 @@
         .service-item {
             border-top: 1px solid rgba(255,255,255,0.1);
             padding: 60px 0;
-            display: flex;
-            align-items: flex-start;
+            display: grid;
+            grid-template-columns: 100px 1fr 240px;
+            align-items: center;
             gap: 40px;
         }
         .service-item:last-child {
@@ -519,11 +519,190 @@
         .mode-omote .service-catch { color: #000; }
         .mode-omote .service-text { color: rgba(0,0,0,0.6); }
 
+        /* ===== Service Mock — Phone wrapper ===== */
+        .service-mock {
+            width: 200px;
+            height: 420px; /* iPhone 15 Pro Max比率 ≒ 0.476 */
+            position: relative;
+            margin-left: auto;
+            margin-right: 32px; /* 右余白で左シフト(視覚バランス調整) */
+            perspective: 1400px;
+            transform-style: preserve-3d;
+            pointer-events: none;
+        }
+        /* 厚みシム: 本体と同色のスラブを少し奥に置く(額縁にせず素材として連続させる) */
+        .service-mock::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #0e0e0e;
+            border-radius: 34px;
+            transform: translateZ(-8px);
+        }
+
+        .phone {
+            width: 100%;
+            height: 100%;
+            background: #0e0e0e;
+            border-radius: 34px;
+            padding: 6px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(10deg) rotateY(-24deg);
+            will-change: transform;
+            box-shadow:
+                0 14px 28px rgba(0,0,0,0.22),
+                0 42px 80px rgba(0,0,0,0.28),
+                inset 0 0 0 1px rgba(255,255,255,0.08);
+        }
+        /* 偶数番アイテムは右に傾けてリズム化 */
+        .service-item:nth-child(even) .phone {
+            transform: rotateX(10deg) rotateY(24deg);
+        }
+        /* モーション控えめ設定: tiltは弱める */
+        @media (prefers-reduced-motion: reduce) {
+            .phone {
+                transform: rotateX(4deg) rotateY(-10deg);
+            }
+            .service-item:nth-child(even) .phone {
+                transform: rotateX(4deg) rotateY(10deg);
+            }
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 28px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .mode-ura .phone-screen { background: #f8f8f8; }
+        /* Dynamic Island風ノッチ */
+        .phone::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 64px;
+            height: 18px;
+            background: #0e0e0e;
+            border-radius: 14px;
+            z-index: 3;
+        }
+        /* Home indicator */
+        .phone::after {
+            content: '';
+            position: absolute;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 64px;
+            height: 4px;
+            background: rgba(0,0,0,0.25);
+            border-radius: 2px;
+            z-index: 3;
+        }
+
+        /* Status bar (top — clock + signal/battery) */
+        .phone-status {
+            height: 36px;
+            padding: 6px 22px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-family: -apple-system, 'Helvetica Neue', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: #000;
+            flex-shrink: 0;
+        }
+        .phone-status .pst-r { display: flex; gap: 4px; align-items: center; font-size: 10px; }
+        .phone-status .pst-r::before { content: '●●●'; letter-spacing: -1px; }
+
+        /* Inner content */
+        .phone-content {
+            flex: 1;
+            overflow: hidden;
+            padding: 8px 14px 28px;
+            color: #000;
+            font-family: -apple-system, 'Helvetica Neue', "Hiragino Sans", sans-serif;
+        }
+
+        /* ----- 01 DEBUG: dashboard ----- */
+        .mock-debug .pc-title { font-size: 10px; color: rgba(0,0,0,0.5); letter-spacing: 0.1em; margin-bottom: 4px; }
+        .mock-debug .pc-headline { font-size: 17px; font-weight: 800; line-height: 1.25; margin-bottom: 14px; }
+        .mock-debug .pc-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px; }
+        .mock-debug .pc-card { background: #f5f5f7; border-radius: 8px; padding: 8px; font-size: 9px; color: rgba(0,0,0,0.55); position: relative; }
+        .mock-debug .pc-card .v { font-size: 17px; font-weight: 800; line-height: 1.2; color: #000; margin-bottom: 1px; }
+        .mock-debug .pc-card.bad .v { color: #ff3b30; }
+        .mock-debug .pc-card.bad::after { content: '⚠'; position: absolute; top: 6px; right: 8px; color: #ff3b30; font-size: 11px; }
+        .mock-debug .pc-bug { background: #ffeceb; border-left: 2px solid #ff3b30; padding: 7px 9px; font-size: 10px; line-height: 1.4; color: #c62828; border-radius: 0 6px 6px 0; }
+
+        /* ----- 02 VERBALIZATION: editor ----- */
+        .mock-verb .pc-doc { padding-top: 6px; }
+        .mock-verb .pc-rough { color: rgba(0,0,0,0.35); text-decoration: line-through; line-height: 1.5; margin-bottom: 12px; font-size: 11px; }
+        .mock-verb .pc-arrow { color: #007aff; font-size: 10px; font-weight: 800; letter-spacing: 0.15em; margin-bottom: 8px; }
+        .mock-verb .pc-final { color: #000; font-size: 17px; font-weight: 800; line-height: 1.4; }
+
+        /* ----- 03 LP/WEB: in-phone LP ----- */
+        .mock-web .phone-content { padding: 8px 0 28px; }
+        .mock-web .pc-nav { font-size: 10px; font-weight: 800; padding: 0 14px 8px; border-bottom: 1px solid rgba(0,0,0,0.08); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .mock-web .pc-hero { background: #0e0e0e; color: #fff; padding: 22px 14px; margin: 0 12px; border-radius: 10px; }
+        .mock-web .pc-hero h4 { font-size: 14px; font-weight: 800; line-height: 1.35; margin: 0 0 12px; }
+        .mock-web .pc-hero .pc-cta { display: inline-block; background: #fff; color: #000; padding: 6px 12px; border-radius: 99px; font-size: 9px; font-weight: 800; letter-spacing: 0.1em; }
+
+        /* ----- 04 LINE: chat ----- */
+        .mock-chat .phone-content { padding: 8px 0 28px; display: flex; flex-direction: column; gap: 0; }
+        .mock-chat .pc-head { background: #06c755; color: #fff; padding: 8px 14px; display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; }
+        .mock-chat .pc-avatar { width: 22px; height: 22px; border-radius: 50%; background: #fff; }
+        .mock-chat .pc-msgs { padding: 10px 14px; flex: 1; overflow: hidden; }
+        .mock-chat .pc-bubble { padding: 7px 10px; border-radius: 14px; max-width: 80%; line-height: 1.4; font-size: 10px; margin-bottom: 6px; }
+        .mock-chat .pc-bubble.recv { background: #f0f0f0; color: #000; }
+        .mock-chat .pc-bubble.send { background: #06c755; color: #fff; margin-left: auto; }
+        .mock-chat .pc-read { font-size: 8px; color: rgba(0,0,0,0.4); text-align: right; margin-top: -2px; margin-bottom: 6px; }
+
+        /* ----- 05 VIDEO: in-phone player ----- */
+        .mock-video .phone-content { padding: 8px 0 28px; display: flex; flex-direction: column; }
+        .mock-video .pc-vid { background: linear-gradient(135deg, #2a2a2a 0%, #555 100%); aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; margin: 0 14px; border-radius: 8px; }
+        .mock-video .pc-play { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.95); position: relative; }
+        .mock-video .pc-play::after { content: ''; position: absolute; top: 50%; left: 56%; transform: translate(-50%, -50%); border: 8px solid transparent; border-left: 12px solid #000; }
+        .mock-video .pc-meta { padding: 12px 14px 0; }
+        .mock-video .pc-vtitle { font-size: 12px; font-weight: 800; line-height: 1.35; margin-bottom: 4px; }
+        .mock-video .pc-vstats { font-size: 10px; color: rgba(0,0,0,0.5); }
+
+        /* ----- 06 AI OPS: AI chat ----- */
+        .mock-ai .phone-content { padding: 8px 14px 28px; }
+        .mock-ai .pc-aim { padding: 7px 10px; border-radius: 14px; max-width: 88%; line-height: 1.4; font-size: 10px; margin-bottom: 6px; }
+        .mock-ai .pc-aim.user { background: #007aff; color: #fff; margin-left: auto; }
+        .mock-ai .pc-aim.ai { background: #f0f0f0; color: #000; }
+        .mock-ai .pc-result { background: #e8f5e9; padding: 8px 10px; border-radius: 8px; font-size: 10px; line-height: 1.5; color: #1b5e20; border-left: 2px solid #34c759; }
+        .mock-ai .pc-result strong { color: #1b5e20; font-size: 13px; display: block; margin-top: 4px; font-weight: 800; }
+
+        @media (max-width: 1024px) {
+            .service-item { grid-template-columns: 80px 1fr 180px; gap: 28px; }
+            .service-mock { width: 180px; height: 380px; margin-right: 24px; }
+            .service-mock::before { border-radius: 30px; }
+            .phone { padding: 5px; border-radius: 30px; }
+            .phone::before { width: 56px; height: 16px; top: 9px; }
+        }
+
         @media (max-width: 768px) {
-            .service-item { flex-direction: column; gap: 20px; padding: 40px 0; }
+            .service-item { display: flex; flex-direction: column; gap: 20px; padding: 40px 0; }
             .service-num { font-size: 40px; min-width: auto; }
             .service-catch { font-size: 24px; }
             .sec-service { padding: 80px 5%; }
+            .service-mock {
+                width: 200px;
+                height: 420px;
+                margin: 20px 0 0 0;     /* 中央→左寄せ */
+                margin-left: 5%;
+            }
+            .phone { padding: 6px; border-radius: 34px; }
+            .phone::before { width: 64px; height: 18px; top: 10px; }
         }
 
         /* Footer styles (Crackin Image Reference) */
@@ -793,12 +972,16 @@
         /* Zig-zag / Alternating Section Utility */
         .sec-zigzag {
             padding: 120px 5%;
+            position: relative;
+            --accent: #E60074; /* Manifestoマゼンタ */
         }
         .zigzag-row {
             display: flex;
             align-items: center;
             gap: 80px;
             margin-bottom: 120px;
+            position: relative;
+            z-index: 1;
         }
         .zigzag-row:nth-child(even) {
             flex-direction: row-reverse;
@@ -814,7 +997,61 @@
             overflow: hidden;
             border: 1px solid rgba(0,0,0,0.05);
         }
+        /* 初期状態:モノクロ(JS scrubで行ごとにカラー化) */
+        .zigzag-img img {
+            filter: grayscale(1);
+            will-change: filter;
+        }
         .mode-ura .zigzag-img { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.05); }
+
+        /* Editorial big number */
+        .zigzag-num {
+            display: block;
+            font-size: 120px;
+            line-height: 1;
+            margin-bottom: 28px;
+            letter-spacing: -0.02em;
+            color: var(--accent);
+            font-weight: 300;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .mode-ura .zigzag-num { color: var(--accent); opacity: 0.95; }
+
+        /* Vertical connecting line (D) */
+        .zigzag-progress {
+            position: absolute;
+            left: 50%;
+            top: 280px;
+            bottom: 80px;
+            width: 2px;
+            background: var(--accent);
+            transform: translateX(-50%) scaleY(0);
+            transform-origin: top;
+            pointer-events: none;
+            z-index: 0;
+            box-shadow: 0 0 14px rgba(230, 0, 116, 0.45);
+        }
+        .mode-ura .zigzag-progress { background: var(--accent); }
+
+        /* マゼンタの縦アクセントバー(Manifesto Page 11準拠) */
+        .sec-zigzag .service-catch {
+            position: relative;
+            padding-left: 18px;
+        }
+        .sec-zigzag .service-catch::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            bottom: 6px;
+            width: 3px;
+            background: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .zigzag-progress { display: none; }
+            .zigzag-num { font-size: 80px; }
+        }
 
         /* News Section styles */
         .sec-news {
@@ -1245,67 +1482,38 @@
         </div>
     </div>
 
-    <!-- Client Logo Carousel -->
-    <section class="logo-carousel">
-        <div class="logo-track">
-            <!-- First set of logos (Arbitrary curated brands) -->
-            <div class="logo-item"><img src="assets/images/logo_client_new.svg" alt="New Client"></div>
-            <div class="logo-item">ADOBE</div>
-            <div class="logo-item">FIGMA</div>
-            <div class="logo-item">STRIPE</div>
-            <div class="logo-item">NOTION</div>
-            <div class="logo-item">SLACK</div>
-            <div class="logo-item">FRAMER</div>
-            <div class="logo-item">VERCEL</div>
-            <div class="logo-item">APPLE</div>
-            <div class="logo-item">SONY</div>
-            <!-- Duplicate for seamless loop -->
-            <div class="logo-item"><img src="assets/images/logo_client_new.svg" alt="New Client"></div>
-            <div class="logo-item">ADOBE</div>
-            <div class="logo-item">FIGMA</div>
-            <div class="logo-item">STRIPE</div>
-            <div class="logo-item">NOTION</div>
-            <div class="logo-item">SLACK</div>
-            <div class="logo-item">FRAMER</div>
-            <div class="logo-item">VERCEL</div>
-            <div class="logo-item">APPLE</div>
-            <div class="logo-item">SONY</div>
-        </div>
-    </section>
-
     <!-- Vision Section (FUNTECH Style Integration) -->
-    <section class="sec-vision">
+    <section id="about" class="sec-vision">
         <div class="inner">
             <h2 class="vision-title">CRAFTING THE<br>UNSEEN STRUCTURES</h2>
-            <p class="vision-sub">STRATEGY & VERBALIZATION FIRM >> MONOKURO.</p>
-            
+            <p class="vision-sub">想いを、伝わるかたちに。 — MONOKURO.</p>
+
             <div class="capsule-ticker">
                 <div class="ticker-track">
-                    <span>2026.04.15 LOGICAL STRUCTURE</span>
-                    <span>2026.04.10 VERBALIZATION</span>
-                    <span>2026.04.05 BRANDING</span>
-                    <span>2026.03.28 LTV OPTIMIZATION</span>
-                    <span>2026.03.15 BUSINESS DESIGN</span>
-                    <span>2026.04.15 LOGICAL STRUCTURE</span>
-                    <span>2026.04.10 VERBALIZATION</span>
-                    <span>2026.04.05 BRANDING</span>
-                    <span>2026.03.28 LTV OPTIMIZATION</span>
-                    <span>2026.03.15 BUSINESS DESIGN</span>
+                    <span>DEBUG 構造化</span>
+                    <span>TRANSLATE 言語化</span>
+                    <span>DEPLOY 実装</span>
+                    <span>OPTIMIZE 運用最適化</span>
+                    <span>LP / LINE / SNS / 動画 / AI 運用</span>
+                    <span>DEBUG 構造化</span>
+                    <span>TRANSLATE 言語化</span>
+                    <span>DEPLOY 実装</span>
+                    <span>OPTIMIZE 運用最適化</span>
+                    <span>LP / LINE / SNS / 動画 / AI 運用</span>
                 </div>
             </div>
 
             <div class="vision-copy">
                 <p class="lead">「自分は白、顧客は色。」</p>
                 <p class="text">
-                    主役に光を当てるために、自らは背景（ウラカタ）へ。ウラカタに徹するほど、対象は正しく輝く。<br>
-                    構造、言語、そして情熱。これらを最適に適合させる多角的な実務伴走手法で、<br>
-                    顧客の想いが最も鮮やかに伝わる、「売れる仕組み」というブランドエクスペリエンスを提供します。
+                    主役を勝たせる、影の軍師。<br>
+                    モノクロ。は、売れない理由（バグ）を構造化し、売れる仕組み（システム）として実装する。<br>
+                    戦略・言語化・実装・運用までを一気通貫で、挑戦者の側で計を授け、共に汗をかく。
                 </p>
             </div>
 
             <div class="vision-links">
-                <a href="#about" class="v-link">ABOUT MONOKURO</a>
-                <a href="#philosophy" class="v-link">OUR PHILOSOPHY</a>
+                <a href="#service" class="v-link">VIEW SERVICE</a>
             </div>
         </div>
     </section>
@@ -1415,11 +1623,27 @@
                 <li class="service-item">
                     <div class="service-num">01</div>
                     <div class="service-info">
-                        <span class="service-en">BUSINESS STRATEGY</span>
-                        <h3 class="service-catch">戦略設計と構造化。<br>勝てる「仕組み」を設計する。</h3>
+                        <span class="service-en">STRATEGY / DEBUG</span>
+                        <h3 class="service-catch">戦略コンサル・構造設計。<br>売れない理由を、構造化する。</h3>
                         <p class="service-text">
-                            ビジネスモデルの構築からLTVの最適化まで、持続可能な成長のための「構造」を論理的に設計します。単なるアイデア出しに留まらない、数値に裏打ちされた戦略立案で主役を支援します。
+                            ビジネスモデル・訴求・LTV・導線を構造的に分解し、エラー箇所（バグ）を特定。打ち手を設計図に落とすところから伴走します。
                         </p>
+                    </div>
+                    <div class="service-mock mock-debug">
+                        <div class="phone">
+                            <div class="phone-screen">
+                                <div class="phone-status"><span>9:41</span><span class="pst-r">100%</span></div>
+                                <div class="phone-content">
+                                    <div class="pc-title">CVR ANALYSIS</div>
+                                    <div class="pc-headline">伸びない<br>原因を、特定。</div>
+                                    <div class="pc-cards">
+                                        <div class="pc-card"><div class="v">2.1%</div>CVR</div>
+                                        <div class="pc-card bad"><div class="v">42%</div>離脱</div>
+                                    </div>
+                                    <div class="pc-bug">⚠ Funnel:42 で離脱集中</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </li>
 
@@ -1428,10 +1652,24 @@
                     <div class="service-num">02</div>
                     <div class="service-info">
                         <span class="service-en">VERBALIZATION</span>
-                        <h3 class="service-catch">言語化・コンセプトメイク。<br>熱量を、伝わる「言葉」に。</h3>
+                        <h3 class="service-catch">言語化・コンセプト設計。<br>熱量を、伝わる言葉に。</h3>
                         <p class="service-text">
-                            内側に秘めた熱量や才能を、顧客の心に届く「言語」へと翻訳します。パーパス策定からキャッチコピー、ストーリーライティングまで、ブランドの輪郭を鮮明に描き出します。
+                            パーパス・コンセプト・ストーリー・オファーを、顧客に届く形へ翻訳。価値が正しく伝達される「プロトコル」へ書き換えます。
                         </p>
+                    </div>
+                    <div class="service-mock mock-verb">
+                        <div class="phone">
+                            <div class="phone-screen">
+                                <div class="phone-status"><span>9:41</span><span class="pst-r">100%</span></div>
+                                <div class="phone-content">
+                                    <div class="pc-doc">
+                                        <div class="pc-rough">私たちの想いと品質で<br>お客様に寄り添う</div>
+                                        <div class="pc-arrow">↓ TRANSLATE</div>
+                                        <div class="pc-final">主役を勝たせる、<br>影の軍師。</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </li>
 
@@ -1439,11 +1677,105 @@
                 <li class="service-item">
                     <div class="service-num">03</div>
                     <div class="service-info">
-                        <span class="service-en">OPERATIONS & MARKETING</span>
-                        <h3 class="service-catch">現場特化型・実務伴走。<br>「動く」実務を提供。</h3>
+                        <span class="service-en">LP / WEB</span>
+                        <h3 class="service-catch">LP・Web 制作。<br>動く形にデプロイする。</h3>
                         <p class="service-text">
-                            机上の空論ではない、現場で真に「動く」実働を。SNS運用支援、広告運用サポートから、制作物のデリバリーまで、クリエイターとしての高い解像度で実務を完遂します。
+                            コンバージョン設計を起点に、LP・コーポレートサイト・キャンペーンサイトを実装。設計図を、実際に「動く形」へ。
                         </p>
+                    </div>
+                    <div class="service-mock mock-web">
+                        <div class="phone">
+                            <div class="phone-screen">
+                                <div class="phone-status"><span>9:41</span><span class="pst-r">100%</span></div>
+                                <div class="phone-content">
+                                    <div class="pc-nav"><span>MONOKURO.</span><span>≡</span></div>
+                                    <div class="pc-hero">
+                                        <h4>想いを、<br>伝わるかたちに。</h4>
+                                        <span class="pc-cta">CONTACT →</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Service 04 -->
+                <li class="service-item">
+                    <div class="service-num">04</div>
+                    <div class="service-info">
+                        <span class="service-en">LINE / SNS / AD</span>
+                        <h3 class="service-catch">LINE・SNS・広告運用。<br>配信で、届け続ける。</h3>
+                        <p class="service-text">
+                            配信設計から制作・運用・チューニングまで一気通貫。届けるルートを物理的に組み、反応率と CVR を監視して最短で売れる状態へ。
+                        </p>
+                    </div>
+                    <div class="service-mock mock-chat">
+                        <div class="phone">
+                            <div class="phone-screen">
+                                <div class="phone-status"><span>9:41</span><span class="pst-r">100%</span></div>
+                                <div class="pc-head"><div class="pc-avatar"></div>モノクロ。サポート</div>
+                                <div class="pc-msgs">
+                                    <div class="pc-bubble recv">資料いただけますか?</div>
+                                    <div class="pc-bubble send">こちらどうぞ ↗</div>
+                                    <div class="pc-read">既読</div>
+                                    <div class="pc-bubble recv">早速確認します</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Service 05 -->
+                <li class="service-item">
+                    <div class="service-num">05</div>
+                    <div class="service-info">
+                        <span class="service-en">VIDEO / CREATIVE</span>
+                        <h3 class="service-catch">動画・クリエイティブ制作。<br>素材を、武器に変える。</h3>
+                        <p class="service-text">
+                            静止画・動画・素材一式を、戦略と整合する形で制作。配信・運用と地続きで設計し、見せて終わらない素材へ。
+                        </p>
+                    </div>
+                    <div class="service-mock mock-video">
+                        <div class="phone">
+                            <div class="phone-screen">
+                                <div class="phone-status"><span>9:41</span><span class="pst-r">100%</span></div>
+                                <div class="phone-content">
+                                    <div class="pc-vid"><div class="pc-play"></div></div>
+                                    <div class="pc-meta">
+                                        <div class="pc-vtitle">想いを、伝わるかたちに。</div>
+                                        <div class="pc-vstats">2:30 · MONOKURO.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Service 06 -->
+                <li class="service-item">
+                    <div class="service-num">06</div>
+                    <div class="service-info">
+                        <span class="service-en">AI OPERATIONS</span>
+                        <h3 class="service-catch">AI 運用支援。<br>恐怖を、楽しさにハックする。</h3>
+                        <p class="service-text">
+                            AI を組み込んだ業務・配信オペレーションを設計し、内製化まで伴走。「難しい・怖い」を、図と手順とテンプレで解体します。
+                        </p>
+                    </div>
+                    <div class="service-mock mock-ai">
+                        <div class="phone">
+                            <div class="phone-screen">
+                                <div class="phone-status"><span>9:41</span><span class="pst-r">100%</span></div>
+                                <div class="phone-content">
+                                    <div class="pc-aim user">CVR を改善したい</div>
+                                    <div class="pc-aim ai">分析・最適化を実行します</div>
+                                    <div class="pc-result">
+                                        ✓ プロンプト最適化<br>
+                                        ✓ A/B テスト実装
+                                        <strong>+24% CVR ↑</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -1456,111 +1788,65 @@
 
     <!-- Process Section (Zig-zag Flow) -->
     <section id="process" class="sec-zigzag">
+        <div class="zigzag-progress"></div>
         <div class="inner">
             <header class="works-header" style="margin-bottom: 80px;">
                 <h2 class="works-ttl">
-                    <span class="works-ttl-en">OUR PROCESS</span>
-                    <span class="works-ttl-jp">実務伴走の流れ</span>
+                    <span class="works-ttl-en">OUR ALGORITHM</span>
+                    <span class="works-ttl-jp">モノクロ・アルゴリズム</span>
                 </h2>
             </header>
 
             <div class="zigzag-row">
                 <div class="zigzag-content">
-                    <span class="service-num" style="font-size: 40px;">01</span>
-                    <h3 class="service-catch">HEARING & AUDIT<br>課題の抽出と現状分析。</h3>
+                    <span class="zigzag-num">01</span>
+                    <h3 class="service-catch">DEBUG<br>構造化する。</h3>
                     <p class="service-text">
-                        まずは徹底的なヒアリングを行い、ビジネスの現状、潜在的な課題、そして「まだ言葉になっていない熱量」を可視化します。表面的な要望だけでなく、事業の根幹にある勝機を探り当てます。
+                        市場・商品・訴求・導線を構造的に分解し、「売れない」のエラー箇所（バグ）を特定する。表面的な要望ではなく、事業の根幹にある勝機を探り当てる工程。
                     </p>
                 </div>
                 <div class="zigzag-img">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800" alt="Hearing" style="width:100%; height:100%; object-fit:cover; filter:grayscale(1);">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800" alt="Debug" style="width:100%; height:100%; object-fit:cover;">
                 </div>
             </div>
 
             <div class="zigzag-row">
                 <div class="zigzag-content">
-                    <span class="service-num" style="font-size: 40px;">02</span>
-                    <h3 class="service-catch">STRATEGY & VERBALIZATION<br>戦略設計と言語化。</h3>
+                    <span class="zigzag-num">02</span>
+                    <h3 class="service-catch">TRANSLATE<br>言語化する。</h3>
                     <p class="service-text">
-                        抽出した課題に基づき、進むべき方向（戦略）を策定。同時に、ブランドの核となるコンセプトを言語化し、誰に、何を、どのように届けるべきかを定義します。ここで「売れる仕組み」の設計図が完成します。
+                        価値が正確に伝達される形へ、プロトコル（ストーリー・オファー）を書き換える。コンセプト・コピー・パーパスを、誰に、何を、どう届けるかの設計図にする工程。
                     </p>
                 </div>
                 <div class="zigzag-img">
-                    <img src="https://images.unsplash.com/photo-1542626991-cbc4e32524cc?auto=format&fit=crop&q=80&w=800" alt="Strategy" style="width:100%; height:100%; object-fit:cover; filter:grayscale(1);">
+                    <img src="https://images.unsplash.com/photo-1542626991-cbc4e32524cc?auto=format&fit=crop&q=80&w=800" alt="Translate" style="width:100%; height:100%; object-fit:cover;">
                 </div>
             </div>
 
             <div class="zigzag-row">
                 <div class="zigzag-content">
-                    <span class="service-num" style="font-size: 40px;">03</span>
-                    <h3 class="service-catch">EXECUTION & DEPLOY<br>制作と実装。</h3>
+                    <span class="zigzag-num">03</span>
+                    <h3 class="service-catch">DEPLOY<br>動く形に実装する。</h3>
                     <p class="service-text">
-                        設計図に基づき、Webサイト、ライティング、各種クリエイティブを具現化します。単に美しいだけでなく、戦略に基づいた論理的なデザインで、ユーザーの行動を促します。
+                        LP / LINE / SNS / 動画 / AI 運用を一気通貫で「動く形（フルスタック実装）」へと組み上げる。設計図を、現場で稼働する仕組みに変える工程。
                     </p>
                 </div>
                 <div class="zigzag-img">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="Execution" style="width:100%; height:100%; object-fit:cover; filter:grayscale(1);">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="Deploy" style="width:100%; height:100%; object-fit:cover;">
                 </div>
             </div>
 
             <div class="zigzag-row">
                 <div class="zigzag-content">
-                    <span class="service-num" style="font-size: 40px;">04</span>
-                    <h3 class="service-catch">OPERATIONS & OPTIMIZATION<br>実務伴走と最適化。</h3>
+                    <span class="zigzag-num">04</span>
+                    <h3 class="service-catch">OPTIMIZE<br>運用でチューニングする。</h3>
                     <p class="service-text">
-                        納品して終わりではありません。SNS運用、広告運用、データ分析など、現場の実務に深く入り込み、改善を繰り返します。クライアントの「ウラカタ」として、共に汗をかき、成果を最大化させます。
+                        反応率・CVR を監視し、最短で売れる状態へチューニングする。納品で終わらせず、ウラカタとして主役の側に立ち続け、共に成果を最大化する工程。
                     </p>
                 </div>
                 <div class="zigzag-img">
-                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800" alt="Operations" style="width:100%; height:100%; object-fit:cover; filter:grayscale(1);">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800" alt="Optimize" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Member Section (Crackin Style TEAM) -->
-    <section id="about" class="sec-team">
-        <div class="team-intro">
-            <header class="works-header">
-                <h2 class="works-ttl">
-                    <span class="works-ttl-en">TEAM</span>
-                    <span class="works-ttl-jp">メンバー紹介</span>
-                </h2>
-            </header>
-            <p class="vision-copy" style="font-size: 14px; margin-top: 30px;">
-                モノクロ。は小規模ながら、各分野のスペシャリストが集うプロフェッショナルな「ウラカタ」集団です。<br>手を取り合い、クライアントの挑戦を加速させます。
-            </p>
-        </div>
-        
-        <div class="team-grid">
-            <!-- Member 1 -->
-            <div class="team-card">
-                <div class="team-photo">
-                    <img src="assets/images/members/representative.png" alt="Minori Kojima">
-                </div>
-                <span class="team-role">Representative / Strategist</span>
-                <span class="team-name">小島 実</span>
-                <p class="team-quote">「主役を輝かせるための、最適な『構造』を。」</p>
-            </div>
-
-            <!-- Member 2 -->
-            <div class="team-card">
-                <div class="team-photo">
-                    <img src="assets/images/members/director.png" alt="Creative Director">
-                </div>
-                <span class="team-role">Creative Director</span>
-                <span class="team-name">佐藤 結衣</span>
-                <p class="team-quote">「美しさの背景には、必ず論理がある。」</p>
-            </div>
-
-            <!-- Member 3 -->
-            <div class="team-card">
-                <div class="team-photo">
-                    <img src="assets/images/members/strategist.png" alt="Operations Strategist">
-                </div>
-                <span class="team-role">Operations Strategist</span>
-                <span class="team-name">田中 健一</span>
-                <p class="team-quote">「現場で動かない戦略に、価値はない。」</p>
             </div>
         </div>
     </section>
@@ -1611,10 +1897,16 @@
         <div class="company-content">
             <!-- Left: Map Area -->
             <div class="company-map">
-                <div class="map-placeholder">
-                    <span>GOOGLE MAP AREA</span>
-                    <span style="font-size: 10px; margin-top: 10px;">〒578-0931 大阪府東大阪市花園東町1丁目17-30</span>
-                </div>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.7730325587972!2d135.6172728758758!3d34.66043448537203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600121ff4f941631%3A0x895eb953ebe329b9!2z44Kz44Of44Ol44OL44OG44Kj44K144Ot44Oz77yG44Os44Oz44K_44Or44K544Oa44O844K544GI44GM44GK!5e0!3m2!1sja!2sjp!4v1778111946455!5m2!1sja!2sjp"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="モノクロ。所在地マップ"
+                ></iframe>
             </div>
 
             <!-- Right: Details Area -->
@@ -1626,6 +1918,10 @@
                     <li class="company-details-item">
                         <strong>ADDRESS</strong>
                         〒578-0931 大阪府東大阪市花園東町1丁目17-30
+                    </li>
+                    <li class="company-details-item">
+                        <strong>REPRESENTATIVE</strong>
+                        しまの
                     </li>
                     <li class="company-details-item">
                         <strong>TEL</strong>
@@ -1657,14 +1953,14 @@
                 <p style="font-size: 11px; color: rgba(0,0,0,0.5); margin: 5px 0 25px 0;">〒578-0931 大阪府東大阪市花園東町1丁目17-30</p>
                 
                 <div class="footer-cv-area">
-                    <a href="#" class="cv-link">
+                    <a href="assets/docs/MONOKURO_MANIFESTO.pdf" class="cv-link" target="_blank" rel="noopener" download>
                         <div class="cv-icon-box">
                             <!-- Document Icon -->
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                         </div>
                         <div class="cv-info">
                             <span class="cv-label">資料ダウンロード</span>
-                            <span class="cv-en">DOCUMENT ↗</span>
+                            <span class="cv-en">MANIFESTO ↗</span>
                         </div>
                     </a>
                     
@@ -1714,7 +2010,6 @@
                         <li><a href="#service">戦略設計事業</a></li>
                         <li><a href="#service">言語化支援事業</a></li>
                         <li><a href="#service">実務伴走事業</a></li>
-                        <li><a href="#">SDGsへの取り組み</a></li>
                     </ul>
                 </div>
             </div>
@@ -1730,6 +2025,144 @@
             <p class="bottom-copyright">&copy; 2026 MONOKURO Inc. ALL RIGHTS RESERVED.</p>
         </div>
     </footer>
+
+    <!-- Animation Libraries -->
+    <script src="gsap.min.js"></script>
+    <script src="ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+    <script src="assets/js/lenis-setup.js"></script>
+    <script>
+        // ===== ScrollTrigger Section Animations =====
+
+        // Vision: タイトル → サブ → コピー → リンク を順番に下から
+        gsap.from(['.vision-title', '.vision-sub', '.vision-copy', '.vision-links'], {
+            y: 60, opacity: 0, duration: 0.9, ease: 'power3.out',
+            stagger: 0.15,
+            scrollTrigger: { trigger: '.sec-vision', start: 'top 70%' }
+        });
+
+        // Works: 見出し + 6カードをスタガーで
+        gsap.from('.sec-works .works-header, .works-grid .works-item', {
+            y: 70, opacity: 0, duration: 0.9, ease: 'power3.out',
+            stagger: 0.08,
+            scrollTrigger: { trigger: '.sec-works', start: 'top 75%' }
+        });
+
+        // Service: 見出し + 6項目をスタガーで
+        gsap.from('.sec-service .works-header, .service-list .service-item', {
+            y: 60, opacity: 0, duration: 0.8, ease: 'power3.out',
+            stagger: 0.08,
+            scrollTrigger: { trigger: '.sec-service', start: 'top 75%' }
+        });
+
+        // Service phone mockup: スクロールで3D tiltを揺らす(Pelata風奥行き)
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            gsap.utils.toArray('.service-list .service-item').forEach((item, i) => {
+                const phone = item.querySelector('.phone');
+                if (!phone) return;
+                // 奇数(i=0,2,4)=左傾き / 偶数(i=1,3,5)=右傾き
+                const dir = i % 2 === 0 ? -1 : 1;
+                gsap.fromTo(phone,
+                    { rotateX: 10, rotateY: dir * 36 },
+                    {
+                        rotateX: 10,
+                        rotateY: dir * -2,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: item,
+                            start: 'top 85%',
+                            end: 'bottom 15%',
+                            scrub: 0.8
+                        }
+                    }
+                );
+            });
+        }
+
+        // Process(Algorithm): 見出し
+        gsap.from('.sec-zigzag .works-header', {
+            y: 60, opacity: 0, duration: 0.8, ease: 'power3.out',
+            scrollTrigger: { trigger: '.sec-zigzag', start: 'top 80%' }
+        });
+
+        // 各ステップ: A1(数字パララックス) + A2(画像クリップマスク) + A3(段階出現)
+        gsap.utils.toArray('.zigzag-row').forEach((row) => {
+            const num = row.querySelector('.zigzag-num');
+            const img = row.querySelector('.zigzag-img');
+            const content = row.querySelectorAll('.zigzag-num, .service-catch, .service-text');
+
+            // A3. コンテンツ段階出現(番号→タイトル→本文)
+            gsap.from(content, {
+                y: 40, opacity: 0, duration: 0.8, ease: 'power3.out',
+                stagger: 0.15,
+                scrollTrigger: { trigger: row, start: 'top 75%' }
+            });
+
+            // A2. 画像クリップマスク(左→右へwipe)
+            gsap.from(img, {
+                clipPath: 'inset(0 100% 0 0)',
+                duration: 1.2, ease: 'power3.out',
+                scrollTrigger: { trigger: row, start: 'top 75%' }
+            });
+
+            // A1. 数字パララックス(スクロールに合わせてゆっくり上昇)
+            gsap.to(num, {
+                y: -80,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: row,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            });
+        });
+
+        // D. 進行ラインがスクロールに応じて伸びる
+        gsap.to('.zigzag-progress', {
+            scaleY: 1,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '.sec-zigzag',
+                start: 'top 60%',
+                end: 'bottom 80%',
+                scrub: true
+            }
+        });
+
+        // E. 線の進行に合わせて、各行の写真をグレースケール→カラーへscrub
+        gsap.utils.toArray('.zigzag-row').forEach((row) => {
+            const img = row.querySelector('.zigzag-img img');
+            if (!img) return;
+            gsap.fromTo(img,
+                { filter: 'grayscale(1)' },
+                {
+                    filter: 'grayscale(0)',
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: row,
+                        start: 'top 75%',
+                        end: 'top 30%',
+                        scrub: 0.4
+                    }
+                }
+            );
+        });
+
+        // News: 見出し + 各記事を縦スタガー
+        gsap.from('.sec-news .works-header, .news-list .news-item', {
+            y: 40, opacity: 0, duration: 0.7, ease: 'power3.out',
+            stagger: 0.08,
+            scrollTrigger: { trigger: '.sec-news', start: 'top 80%' }
+        });
+
+        // Company: ヘッダーと中身を順番に
+        gsap.from('.sec-company .company-header, .sec-company .company-content', {
+            y: 60, opacity: 0, duration: 0.9, ease: 'power3.out',
+            stagger: 0.2,
+            scrollTrigger: { trigger: '.sec-company', start: 'top 75%' }
+        });
+    </script>
 
     <script>
         let taps = 0, timer, isUra = false;
